@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class MenuController : MonoBehaviour
     public GameObject GameMenu;
     public GameObject SettingsMenu;
 
+    public Slider MusicVolumeSlider;
+    public Slider SFXVolumeSlider;
 
     public void Start()
     {
@@ -67,6 +70,8 @@ public class MenuController : MonoBehaviour
     public void ShowSettingsMenu(bool isShowed)
     {
         SettingsMenu.SetActive(isShowed);
+        SFXVolumeSlider.value = AudioController.Instance.GetSFXVolume();
+        MusicVolumeSlider.value = AudioController.Instance.GetMusicVolume();
     }
 
     public void ShowGameMenu()
@@ -81,5 +86,15 @@ public class MenuController : MonoBehaviour
         MainMenu.SetActive(false);
         PauseMenu.SetActive(true);
         GameMenu.SetActive(false);
+    }
+
+    public void SFXVolumeChanged()
+    {
+        AudioController.Instance.SetSFXVolume(SFXVolumeSlider.value);
+    }
+
+    public void MusicVolumeChanged()
+    {
+        AudioController.Instance.SetMusicVolume(MusicVolumeSlider.value);
     }
 }
