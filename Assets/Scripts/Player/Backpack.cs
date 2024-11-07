@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backpack : MonoBehaviour
+public class Backpack 
 {
     [SerializeField] private int capacity = 10; 
     private List<Item> items = new List<Item>(); 

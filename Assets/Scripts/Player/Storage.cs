@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Storage : MonoBehaviour
+public class Storage 
 {
     [SerializeField] private int capacity = 10;
     private List<Item> items = new List<Item>();
