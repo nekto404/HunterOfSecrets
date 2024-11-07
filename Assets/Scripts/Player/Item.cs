@@ -15,11 +15,13 @@ public class Item : ScriptableObject
 [Serializable]
 public enum Trigger
 {
+    GetPlayerEffectStacks
 }
 
 [Serializable]
 public enum Effect
 {
+    RemoveStackWithChance
 }
 
 [Serializable]
@@ -29,4 +31,6 @@ public class Skill
     public int TriggerValue;
     public Effect Effect;
     public int EffectValue;
+    public int EffectValueAdditional;
+    public string EffectDescription;
 }
