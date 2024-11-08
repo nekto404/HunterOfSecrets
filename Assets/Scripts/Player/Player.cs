@@ -1,14 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player
 {
+    private static Player _instance;
+    public static Player Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new Player();
+            }
+            return _instance;
+        }
+    }
 
-    public int coins = 0;                     
-    public Backpack backpack;                 
-    public Storage storage;                   
-    public List<PlayerSkill> skills;                
-    public int[] currentStatuses = new int[10]; 
+    public int coins = 0;
+    public int level = 1;                   
+    public Backpack backpack;
+    public Storage storage;
+    public List<PlayerSkill> skills = new List<PlayerSkill>();
+    public int[] currentStatuses = new int[10];
+
+    private Player() 
+    {
+        backpack = new Backpack();
+        storage = new Storage();
+    }
 
     public void AddCoins(int amount)
     {
@@ -29,6 +48,13 @@ public class Player : MonoBehaviour
             Debug.LogWarning("Not enough coins to complete the transaction.");
             return false;
         }
+    }
+
+
+    public void LevelUp()
+    {
+        level++;
+        Debug.Log("Player level increased! New level: " + level);
     }
 
     public void AddSkill(PlayerSkill skill)
@@ -52,7 +78,6 @@ public class Player : MonoBehaviour
             Debug.LogWarning("Invalid status index.");
         }
     }
-
 
     public void RemoveStatus(int statusIndex)
     {

@@ -1,10 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backpack 
+public class Backpack
 {
     [SerializeField] private int capacity = 10; 
-    private List<Item> items = new List<Item>(); 
+    private List<Item> items = new List<Item>();
+
+
+    public int Size
+    {
+        get { return capacity; }
+        set
+        {
+            if (value > 0) 
+            {
+                capacity = value;
+            }
+        }
+    }
 
     public bool AddItem(Item item)
     {
