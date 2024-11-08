@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class MenuController : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject GameMenu;
     public GameObject SettingsMenu;
+    public GameObject LoseScreen;
+    public GameObject WinScreen;
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
@@ -96,5 +99,13 @@ public class MenuController : MonoBehaviour
     public void MusicVolumeChanged()
     {
         AudioController.Instance.SetMusicVolume(MusicVolumeSlider.value);
+    }
+
+    public void ShowLoseScreen()
+    {
+    }
+
+    public void ShowWinScreen()
+    {
     }
 }
