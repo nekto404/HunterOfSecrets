@@ -29,6 +29,16 @@ public class Player
         storage = new Storage();
     }
 
+    public void Initialize()
+    {
+        coins = 20;                        // Початкова кількість монет
+        backpack = new Backpack();           // Створення нового рюкзака
+        storage = new Storage();             // Створення нового складу
+        skills = new List<PlayerSkill>();    // Порожній список навичок
+        currentStatuses = new int[10];       // Масив статусів
+        level = 1;                           // Початковий рівень
+    }
+
     public void AddCoins(int amount)
     {
         coins += amount;
