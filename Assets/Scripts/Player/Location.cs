@@ -1,11 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class LocationEvent
-{
-    // Порожній клас для подій, що можна буде розширити
-}
 
 [System.Serializable]
 public class Path
