@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopBackpackUI : BaseStorageUI
+public class GameBackpackUI : BaseStorageUI
 {
     protected override List<Item> GetItems()
     {
@@ -17,16 +17,15 @@ public class ShopBackpackUI : BaseStorageUI
 
     protected override void OnItemAction(Item item)
     {
-        // Логіка продажу предмета
+        // Логіка для викидання предмета
         if (Player.Instance.backpack.RemoveItem(item))
         {
-            Player.Instance.coins += item.Price;
-            Debug.Log($"Предмет '{item.Name}' продано за {item.Price} монет. Новий баланс: {Player.Instance.coins} монет.");
-            UpdateInventoryUI();
+            Debug.Log($"Предмет '{item.Name}' викинуто з рюкзака.");
+            UpdateInventoryUI();  // Оновлюємо інтерфейс після викидання предмета
         }
         else
         {
-            Debug.LogWarning($"Не вдалося продати предмет '{item.Name}'.");
+            Debug.LogWarning($"Не вдалося викинути предмет '{item.Name}'.");
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Backpack
 {
-    [SerializeField] private int capacity = 10; 
+    [SerializeField] private int capacity = 10;
     private List<Item> items = new List<Item>();
 
 
@@ -12,7 +12,7 @@ public class Backpack
         get { return capacity; }
         set
         {
-            if (value > 0) 
+            if (value > 0)
             {
                 capacity = value;
             }
@@ -83,5 +83,15 @@ public class Backpack
         Item left = index > 0 ? items[index - 1] : null;
         Item right = index < items.Count - 1 ? items[index + 1] : null;
         return (left, right);
+    }
+
+    public bool HasEnoughSpace(int itemSize)
+    {
+        int usedSpace = 0;
+        foreach (var item in items)
+        {
+            usedSpace += item.Size;
+        }
+        return (capacity - usedSpace) >= itemSize;
     }
 }

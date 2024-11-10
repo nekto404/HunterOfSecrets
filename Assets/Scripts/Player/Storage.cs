@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Storage 
 {
     [SerializeField] private int capacity = 10;
     private List<Item> items = new List<Item>();
+    public int Size => capacity;
 
     public bool AddItem(Item item)
     {
@@ -70,5 +72,15 @@ public class Storage
         Item left = index > 0 ? items[index - 1] : null;
         Item right = index < items.Count - 1 ? items[index + 1] : null;
         return (left, right);
+    }
+
+    public bool HasEnoughSpace(int itemSize)
+    {
+        int usedSpace = 0;
+        foreach (var item in items)
+        {
+            usedSpace += item.Size;
+        }
+        return (capacity - usedSpace) >= itemSize;
     }
 }
