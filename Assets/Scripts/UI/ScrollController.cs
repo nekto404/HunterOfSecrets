@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ public class ScrollController : MonoBehaviour
         // Центруємо контент, якщо його ширина менша за ширину viewport
         if (content.rect.width <= viewport.rect.width)
         {
-            CenterContent();
+            StartCoroutine(CenterContent());
         }
 
         // Підключаємо метод прокрутки до кнопок
@@ -41,8 +42,9 @@ public class ScrollController : MonoBehaviour
         UpdateButtons();  // Оновлення стану кнопок
     }
 
-    private void CenterContent()
+    private IEnumerator CenterContent()
     {
+        yield return new WaitForEndOfFrame();
         // Центруємо content всередині viewport
         float centeredPositionX = (viewport.rect.width - content.rect.width) / 2;
         content.anchoredPosition = new Vector2(centeredPositionX, content.anchoredPosition.y);
