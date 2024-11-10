@@ -12,21 +12,40 @@ public class ScrollController : MonoBehaviour
     private float itemWidth;            // Ширина одного елемента
     private float maxScrollPosition;    // Максимальна прокрутка
     private float minScrollPosition;    // Мінімальна прокрутка
-    private int visibleItems = 18;      // Кількість видимих елементів одночасно
+    private int visibleItems = 12;      // Кількість видимих елементів одночасно
 
     void Start()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
     {
         // Обчислюємо потрібну ширину одного елемента
         itemWidth = viewport.rect.width / visibleItems;
 
         // Обчислюємо максимальну і мінімальну позицію прокручування
         maxScrollPosition = 0;
-        minScrollPosition = - content.rect.width + viewport.rect.width;
+        minScrollPosition = -content.rect.width + viewport.rect.width;
+
+        // Центруємо контент, якщо його ширина менша за ширину viewport
+        if (content.rect.width <= viewport.rect.width)
+        {
+            CenterContent();
+        }
+
         // Підключаємо метод прокрутки до кнопок
         scrollLeftButton.onClick.AddListener(() => Scroll(-1));
         scrollRightButton.onClick.AddListener(() => Scroll(1));
 
         UpdateButtons();  // Оновлення стану кнопок
+    }
+
+    private void CenterContent()
+    {
+        // Центруємо content всередині viewport
+        float centeredPositionX = (viewport.rect.width - content.rect.width) / 2;
+        content.anchoredPosition = new Vector2(centeredPositionX, content.anchoredPosition.y);
     }
 
     private void Scroll(int direction)
