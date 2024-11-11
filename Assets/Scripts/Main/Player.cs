@@ -17,13 +17,13 @@ public class Player
     }
 
     public int coins = 0;
-    public int level = 1;                   
+    public int level = 1;
     public Backpack backpack;
     public Storage storage;
     public List<PlayerSkill> skills = new List<PlayerSkill>();
     public int[] currentStatuses = new int[10];
 
-    private Player() 
+    private Player()
     {
         backpack = new Backpack();
         storage = new Storage();
@@ -100,5 +100,10 @@ public class Player
         {
             Debug.LogWarning("Invalid status index or no active statuses to remove.");
         }
+    }
+
+    public bool CanAfford(int amount)
+    {
+        return coins >= amount;
     }
 }

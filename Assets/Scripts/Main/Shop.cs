@@ -60,27 +60,30 @@ public class Shop : MonoBehaviour
     // ћетод дл€ покупки предмету
     public bool BuyItem(Item item)
     {
-        if (Player.Instance.SpendCoins(item.Price))
-        {
-            if (Player.Instance.backpack.AddItem(item))
-            {
-                availableItems.Remove(item);
-                Debug.Log("Item purchased: " + item.Name);
-                return true;
-            }
-            else
-            {
-                Debug.LogWarning("Not enough space in the backpack for the item: " + item.Name);
-                Player.Instance.AddCoins(item.Price); // ѕовертаЇмо монети, €кщо покупка не вдалас€
-            }
-        }
-        else
+        // ѕерев≥р€Їмо на€вн≥сть монет та достатньо м≥сц€ в рюкзаку перед спробою покупки
+        if (!Player.Instance.CanAfford(item.Price))
         {
             Debug.LogWarning("Not enough coins to buy the item: " + item.Name);
+            return false;
         }
+
+        if (!Player.Instance.backpack.HasEnoughSpace(item.Size))
+        {
+            Debug.LogWarning("Not enough space in the backpack for the item: " + item.Name);
+            return false;
+        }
+
+        // якщо перев≥рка пройдена, виконуЇмо покупку
+        if (Player.Instance.SpendCoins(item.Price))
+        {
+            Player.Instance.backpack.AddItem(item);
+            availableItems.Remove(item);
+            Debug.Log("Item purchased: " + item.Name);
+            return true;
+        }
+
         return false;
     }
-
 
     public bool UpgradeBackpack()
     {
@@ -88,7 +91,7 @@ public class Shop : MonoBehaviour
         {
             Player.Instance.backpack.Size++;
             Debug.Log("Backpack upgraded. New size: " + Player.Instance.backpack.Size);
-            backpackUpgradeCost = CalculateBackpackUpgradeCost(Player.Instance.backpack.Size); 
+            backpackUpgradeCost = CalculateBackpackUpgradeCost(Player.Instance.backpack.Size);
             return true;
         }
         return false;
