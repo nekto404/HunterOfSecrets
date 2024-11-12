@@ -19,7 +19,7 @@ public class ShopUI : MonoBehaviour
 
     private void Start()
     {
-        shop = FindObjectOfType<Shop>();
+        shop = GameManager.Instance.GetCurrentShop();
         if (shop == null)
         {
             Debug.LogWarning("Shop instance not found. ShopUI will not function correctly.");

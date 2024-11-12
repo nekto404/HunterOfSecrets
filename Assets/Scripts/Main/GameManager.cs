@@ -2,11 +2,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject playerPrefab;      // Префаб гравця
+    public static GameManager Instance { get; private set; } // Глобальний доступ до екземпляра GameManager
+
     public GameObject shopPrefab;        // Префаб магазину
 
     private Shop shopInstance;           // Поточний магазин
     private Location currentLocation;    // Поточна локація
+
+    private void Awake()
+    {
+        // Перевіряємо, чи існує вже екземпляр GameManager
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("Дублікат GameManager виявлено та знищено.");
+            Destroy(gameObject); // Знищуємо дублікати
+            return;
+        }
+
+        Instance = this; // Призначаємо цей екземпляр як активний
+        DontDestroyOnLoad(gameObject); // Робимо GameManager постійним між сценами
+    }
 
     // Метод початку гри
     public void StartGame()
@@ -56,6 +71,26 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Не вдалося знайти жодної локації в Resources/Locations.");
         }
+    }
+
+    // Публічний метод для отримання поточного магазину
+    public Shop GetCurrentShop()
+    {
+        if (shopInstance == null)
+        {
+            Debug.LogWarning("Магазин ще не завантажений.");
+        }
+        return shopInstance;
+    }
+
+    // Публічний метод для отримання поточної локації
+    public Location GetCurrentLocation()
+    {
+        if (currentLocation == null)
+        {
+            Debug.LogWarning("Локація ще не завантажена.");
+        }
+        return currentLocation;
     }
 
     // Метод для перезапуску гри

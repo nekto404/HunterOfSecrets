@@ -25,6 +25,7 @@ public class MenuController : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Game start");
+        GameManager.Instance.StartGame();
         ShowGameMenu();
     }
     
