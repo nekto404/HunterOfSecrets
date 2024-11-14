@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73de5b1eb730ea64fbd6f1cdd78d6c4a, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  id: 0
-  tileName: 
+  id: 2
+  tileName: Water
   sprite: {fileID: 0}
-  travelTime: 0
-  negativeEffect: 0
+  travelTime: 1
+  negativeEffect: 1
