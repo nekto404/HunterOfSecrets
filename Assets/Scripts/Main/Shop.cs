@@ -1,21 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class ItemPool
+{
+    public List<Item> items = new List<Item>(); // Список предметів у конкретному пулі
+}
+
 public class Shop : MonoBehaviour
 {
-    public List<Item>[] itemPools = new List<Item>[5]; // Пули предметів для кожного рівня (задати в інспекторі)
-    public List<Item> availableItems = new List<Item>(); // Предмети, доступні для покупки
-    public int backpackUpgradeCost;                      // Вартість покращення рюкзака
-    public int refreshCost = 10;                         // Вартість оновлення товарів
+    [Header("Shop Configuration")]
+    public List<ItemPool> itemPools = new List<ItemPool>(); // Список пулів, тепер видимий у інспекторі
+    public List<Item> availableItems = new List<Item>();    // Предмети, доступні для покупки
+    public int backpackUpgradeCost;                         // Вартість покращення рюкзака
+    public int refreshCost = 10;                            // Вартість оновлення товарів
 
     private void Start()
     {
-        // Ініціалізуємо пули (якщо вони не задані в інспекторі)
-        for (int i = 0; i < itemPools.Length; i++)
+        // Ініціалізуємо пули предметів, якщо вони ще не заповнені
+        for (int i = 0; i < 5; i++)
         {
-            if (itemPools[i] == null)
+            if (itemPools.Count <= i || itemPools[i] == null)
             {
-                itemPools[i] = new List<Item>();
+                itemPools.Add(new ItemPool());
             }
         }
 
@@ -32,7 +39,7 @@ public class Shop : MonoBehaviour
         List<Item> selectedPool = new List<Item>();
         foreach (var pool in itemPools)
         {
-            selectedPool.AddRange(pool);
+            selectedPool.AddRange(pool.items);
         }
 
         // Вибираємо 3 випадкових предмети для магазину
@@ -60,39 +67,41 @@ public class Shop : MonoBehaviour
     // Метод для покупки предмету
     public bool BuyItem(Item item)
     {
-        // Перевіряємо наявність монет та достатньо місця в рюкзаку перед спробою покупки
-        if (!Player.Instance.CanAfford(item.Price))
+        if (Player.Instance.CanAfford(item.Price))
+        {
+            if (Player.Instance.backpack.AddItem(item))
+            {
+                Player.Instance.SpendCoins(item.Price);
+                availableItems.Remove(item);
+                Debug.Log("Item purchased: " + item.Name);
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Not enough space in the backpack for the item: " + item.Name);
+            }
+        }
+        else
         {
             Debug.LogWarning("Not enough coins to buy the item: " + item.Name);
-            return false;
         }
-
-        if (!Player.Instance.backpack.HasEnoughSpace(item.Size))
-        {
-            Debug.LogWarning("Not enough space in the backpack for the item: " + item.Name);
-            return false;
-        }
-
-        // Якщо перевірка пройдена, виконуємо покупку
-        if (Player.Instance.SpendCoins(item.Price))
-        {
-            Player.Instance.backpack.AddItem(item);
-            availableItems.Remove(item);
-            Debug.Log("Item purchased: " + item.Name);
-            return true;
-        }
-
         return false;
     }
 
+    // Метод для покращення рюкзака
     public bool UpgradeBackpack()
     {
-        if (Player.Instance.SpendCoins(backpackUpgradeCost))
+        if (Player.Instance.CanAfford(backpackUpgradeCost))
         {
+            Player.Instance.SpendCoins(backpackUpgradeCost);
             Player.Instance.backpack.Size++;
             Debug.Log("Backpack upgraded. New size: " + Player.Instance.backpack.Size);
             backpackUpgradeCost = CalculateBackpackUpgradeCost(Player.Instance.backpack.Size);
             return true;
+        }
+        else
+        {
+            Debug.LogWarning("Not enough coins to upgrade the backpack.");
         }
         return false;
     }
@@ -100,8 +109,9 @@ public class Shop : MonoBehaviour
     // Метод для оновлення товарів у магазині
     public bool RefreshShop()
     {
-        if (Player.Instance.SpendCoins(refreshCost))
+        if (Player.Instance.CanAfford(refreshCost))
         {
+            Player.Instance.SpendCoins(refreshCost);
             UpdateAvailableItems();
             Debug.Log("Shop items refreshed.");
             return true;
@@ -109,7 +119,7 @@ public class Shop : MonoBehaviour
         else
         {
             Debug.LogWarning("Not enough coins to refresh the shop.");
-            return false;
         }
+        return false;
     }
 }

@@ -31,7 +31,18 @@ public abstract class BaseStorageUI : MonoBehaviour
         {
             // Створюємо новий UI-елемент для предмета
             GameObject newItemUI = Instantiate(itemPrefab, scrollController.content);
-            newItemUI.GetComponentInChildren<Text>().text = item.Name;  // Встановлюємо ім'я предмета
+
+
+            // Встановлюємо спрайт предмета
+            var itemImage = newItemUI.transform.Find("ItemImage").GetComponent<Image>();
+            if (itemImage != null)
+            {
+                itemImage.sprite = item.Sprite;  // Встановлюємо спрайт з даних предмета
+            }
+            else
+            {
+                Debug.LogWarning("UI-елемент не містить об'єкт ItemImage або компонент Image.");
+            }
 
             // Налаштовуємо розмір елемента відповідно до розміру предмета
             RectTransform itemRect = newItemUI.GetComponent<RectTransform>();

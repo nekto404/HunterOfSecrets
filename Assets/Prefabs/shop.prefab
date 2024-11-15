@@ -44,14 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff89d0d431c59a42b327b63766a0b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableItems:
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-  - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
+  itemPools:
+  - items:
+    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
+    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
+    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
+    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
+    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
+  availableItems: []
   backpackUpgradeCost: 10
   refreshCost: 3
