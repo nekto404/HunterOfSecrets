@@ -10,6 +10,7 @@ public class MenuController : MonoBehaviour
     public GameObject SettingsMenu;
     public GameObject LoseScreen;
     public GameObject WinScreen;
+    public ConfirmationUI ConfirmationUI;
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
