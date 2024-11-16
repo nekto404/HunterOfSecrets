@@ -19,21 +19,21 @@ public class Player
     public int coins = 0;
     public int level = 1;
     public Backpack backpack;
-    public Storage storage;
+    public Backpack storage;
     public List<PlayerSkill> skills = new List<PlayerSkill>();
     public int[] currentStatuses = new int[10];
 
     private Player()
     {
         backpack = new Backpack();
-        storage = new Storage();
+        storage = new Backpack();
     }
 
     public void Initialize()
     {
         coins = 20;                        // Початкова кількість монет
         backpack = new Backpack();           // Створення нового рюкзака
-        storage = new Storage();             // Створення нового складу
+        storage = new Backpack();             // Створення нового складу
         skills = new List<PlayerSkill>();    // Порожній список навичок
         currentStatuses = new int[10];       // Масив статусів
         level = 1;                           // Початковий рівень

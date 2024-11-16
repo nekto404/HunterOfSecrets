@@ -3,6 +3,18 @@ using UnityEngine;
 
 public class StorageBackpackUI : BaseStorageUI
 {
+    private void OnEnable()
+    {
+        // Підписуємося на подію оновлення складу
+        Player.Instance.backpack.OnStorageUpdated += UpdateInventoryUI;
+        UpdateInventoryUI(); // Оновлюємо інтерфейс при активації
+    }
+
+    private void OnDisable()
+    {
+        // Відписуємося від події при вимкненні UI
+        Player.Instance.backpack.OnStorageUpdated -= UpdateInventoryUI;
+    }
     protected override List<Item> GetItems()
     {
         // Повертає предмети з рюкзака гравця

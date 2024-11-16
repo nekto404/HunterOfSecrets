@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class Backpack
     [SerializeField] private int capacity = 10;
     private List<Item> items = new List<Item>();
 
+    public event Action OnStorageUpdated;
 
     public int Size
     {
@@ -30,6 +32,7 @@ public class Backpack
         if (GetUsedCapacity() + item.Size <= capacity)
         {
             items.Add(item);
+            OnStorageUpdated?.Invoke(); // Викликаємо подію при додаванні предмета
             return true;
         }
         else
@@ -41,7 +44,12 @@ public class Backpack
 
     public bool RemoveItem(Item item)
     {
-        return items.Remove(item);
+        bool result = items.Remove(item);
+        if (result)
+        {
+            OnStorageUpdated?.Invoke(); // Викликаємо подію при видаленні предмета
+        }
+        return result;
     }
 
     public bool CanFitItem(Item item)

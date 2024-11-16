@@ -3,6 +3,18 @@ using UnityEngine;
 
 public class StorageUI : BaseStorageUI
 {
+    private void OnEnable()
+    {
+        // Підписуємося на подію оновлення складу
+        Player.Instance.storage.OnStorageUpdated += UpdateInventoryUI;
+        UpdateInventoryUI(); // Оновлюємо інтерфейс при активації
+    }
+
+    private void OnDisable()
+    {
+        // Відписуємося від події при вимкненні UI
+        Player.Instance.storage.OnStorageUpdated -= UpdateInventoryUI;
+    }
     protected override int GetBackpackSize()
     {
         // Отримує розмір складу, який використовується для відображення

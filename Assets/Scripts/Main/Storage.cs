@@ -1,12 +1,14 @@
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
+using System;
 
 public class Storage 
 {
     [SerializeField] private int capacity = 10;
     private List<Item> items = new List<Item>();
     public int Size => capacity;
+
+    public event Action OnStorageUpdated;
 
     public bool AddItem(Item item)
     {
@@ -19,6 +21,7 @@ public class Storage
         if (GetUsedCapacity() + item.Size <= capacity)
         {
             items.Add(item);
+            OnStorageUpdated?.Invoke(); // Викликаємо подію при додаванні предмета
             return true;
         }
         else
@@ -30,7 +33,12 @@ public class Storage
 
     public bool RemoveItem(Item item)
     {
-        return items.Remove(item);
+        bool result = items.Remove(item);
+        if (result)
+        {
+            OnStorageUpdated?.Invoke(); // Викликаємо подію при видаленні предмета
+        }
+        return result;
     }
 
     public bool CanFitItem(Item item)
