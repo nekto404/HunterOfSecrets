@@ -1763,7 +1763,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2900735664293260126, guid: 12879704ef128b24da05243830e01742, type: 3}
+  m_Sprite: {fileID: 7698253521543340847, guid: 75878c0efba719c478bbc0888c864a0b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5433,10 +5433,10 @@ MonoBehaviour:
   - {fileID: 1770633700}
   - {fileID: 1049984992}
   itemUIPrefab: {fileID: 5092804435185855796, guid: 68006c9ab86125d49925fdaebbe106ac, type: 3}
-  refreshUIPrefab: {fileID: 5092804435185855796, guid: 68006c9ab86125d49925fdaebbe106ac, type: 3}
-  upgradeUIPrefab: {fileID: 5092804435185855796, guid: 68006c9ab86125d49925fdaebbe106ac, type: 3}
-  refreshIcon: {fileID: -2900735664293260126, guid: 12879704ef128b24da05243830e01742, type: 3}
-  upgradeIcon: {fileID: -2900735664293260126, guid: 12879704ef128b24da05243830e01742, type: 3}
+  refreshUIPrefab: {fileID: 5092804435185855796, guid: 69db8dcc00c34d84c857370537b8427b, type: 3}
+  upgradeUIPrefab: {fileID: 5092804435185855796, guid: 69db8dcc00c34d84c857370537b8427b, type: 3}
+  refreshIcon: {fileID: -8687029706193621143, guid: 61c2ff56e42e8fe4cb8c381e318140ec, type: 3}
+  upgradeIcon: {fileID: -6415490079858998490, guid: 89fcab06c86598649b9f150ef51ff029, type: 3}
 --- !u!1 &1193869622
 GameObject:
   m_ObjectHideFlags: 0
@@ -9198,7 +9198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 660958469559324409, guid: b49b0ced75879b3448b4a52dfe1fd9e9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
