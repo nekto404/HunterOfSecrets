@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +8,8 @@ public class MenuController : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject GameMenu;
     public GameObject SettingsMenu;
+    public GameObject GameShop;
+    public GameObject GameLocation;
     public GameObject LoseScreen;
     public GameObject WinScreen;
     public ConfirmationUI ConfirmationUI;
@@ -93,6 +94,8 @@ public class MenuController : MonoBehaviour
         PauseMenu.SetActive(true);
         GameMenu.SetActive(false);
     }
+
+
 
     public void SFXVolumeChanged()
     {

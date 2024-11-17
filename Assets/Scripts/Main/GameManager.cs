@@ -1,46 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; } // Глобальний доступ до екземпляра GameManager
+    public static GameManager Instance { get; private set; }
 
-    public GameObject shopPrefab;        // Префаб магазину
-    public MenuController menuController; // Посилання на MenuController (встановлюється в інспекторі)
+    public GameObject shopPrefab;
+    public MenuController menuController;
 
-    private Shop shopInstance;           // Поточний магазин
-    private Location currentLocation;    // Поточна локація
+    private Shop shopInstance;
+    private Location currentLocation;
+
+    private float timeRemaining; // Залишок часу
+    private bool isRoundActive = false;
 
     private void Awake()
     {
-        // Перевіряємо, чи існує вже екземпляр GameManager
         if (Instance != null && Instance != this)
         {
             Debug.LogWarning("Дублікат GameManager виявлено та знищено.");
-            Destroy(gameObject); // Знищуємо дублікати
+            Destroy(gameObject);
             return;
         }
 
-        Instance = this; // Призначаємо цей екземпляр як активний
-        DontDestroyOnLoad(gameObject); // Робимо GameManager постійним між сценами
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Метод початку гри
     public void StartGame()
     {
-        Player.Instance.Initialize();  // Ініціалізація гравця зі значеннями за замовчуванням
+        Player.Instance.Initialize();
         LoadShop();
         LoadRandomLocation();
     }
 
-    // Метод для створення нового гравця
-    private void CreatePlayer()
-    {
-        Player.Instance.coins = 20;
-        Debug.Log("Гравець створений або вже існує.");
-    }
-
-    // Метод для завантаження магазину
     private void LoadShop()
     {
         if (shopInstance == null)
@@ -59,7 +53,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Метод для завантаження випадкової локації з папки Resources/Locations
     private void LoadRandomLocation()
     {
         Location[] locations = Resources.LoadAll<Location>("Locations");
@@ -75,17 +68,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Публічний метод для отримання поточного магазину
-    public Shop GetCurrentShop()
-    {
-        if (shopInstance == null)
-        {
-            Debug.LogWarning("Магазин ще не завантажений.");
-        }
-        return shopInstance;
-    }
-
-    // Публічний метод для отримання поточної локації
     public Location GetCurrentLocation()
     {
         if (currentLocation == null)
@@ -95,22 +77,14 @@ public class GameManager : MonoBehaviour
         return currentLocation;
     }
 
-    // Метод для перезапуску гри
     public void RestartGame()
     {
-        // Видалення магазину
         if (shopInstance != null)
             Destroy(shopInstance.gameObject);
 
-        StartGame(); // Запуск гри заново
+        StartGame();
     }
 
-    public void StartRound()
-    {
-
-    }
-
-    // Метод для показу ConfirmationUI
     public void ShowConfirmationToStartExploration()
     {
         if (menuController == null)
@@ -119,15 +93,67 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Створюємо UnityEvent для кнопки "Так"
-        UnityEngine.Events.UnityEvent onYesEvent = new UnityEngine.Events.UnityEvent();
+        UnityEvent onYesEvent = new UnityEvent();
         onYesEvent.AddListener(StartRound);
 
-        // Викликаємо метод MenuController для ініціалізації ConfirmationUI
         menuController.ShowConfirmation(
-            new List<UnityEngine.Events.UnityEvent> { onYesEvent },
-            new List<UnityEngine.Events.UnityEvent>(), // Пустий список для кнопки "Ні"
+            new List<UnityEvent> { onYesEvent },
+            new List<UnityEvent>(),
             "Are you ready to start the exploration?"
         );
+    }
+
+    public void StartRound()
+    {
+        Debug.Log("Спроба почати");
+        if (currentLocation == null)
+        {
+            Debug.LogError("Неможливо розпочати раунд: локація не завантажена.");
+            return;
+        }
+
+        // Визначаємо рівень гравця (за замовчуванням 0, якщо такого поля немає)
+        int playerLevel = Mathf.Clamp(Player.Instance.level - 1, 0, currentLocation.travelTimes.Length - 1);
+
+        // Встановлюємо тривалість раунду з `travelTimes`
+        timeRemaining = currentLocation.travelTimes[playerLevel];
+
+        isRoundActive = true;
+        menuController.GameShop.SetActive(false);
+        menuController.GameLocation.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (isRoundActive)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                Debug.Log($"Залишилось часу: {timeRemaining:F2} секунд");
+            }
+            else
+            {
+                EndRound();
+            }
+        }
+    }
+
+    public float GetTimeRemaining()
+    {
+        return isRoundActive ? timeRemaining : 0f;
+    }
+
+    public Shop GetCurrentShop()
+    {
+        return shopInstance;
+    }
+
+    private void EndRound()
+    {
+        Debug.Log("Раунд завершено!");
+        isRoundActive = false;
+
+        // Додайте тут логіку завершення раунду
     }
 }
