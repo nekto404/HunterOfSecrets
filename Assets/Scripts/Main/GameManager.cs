@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -5,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; } // Глобальний доступ до екземпляра GameManager
 
     public GameObject shopPrefab;        // Префаб магазину
+    public MenuController menuController; // Посилання на MenuController (встановлюється в інспекторі)
 
     private Shop shopInstance;           // Поточний магазин
     private Location currentLocation;    // Поточна локація
@@ -101,5 +103,31 @@ public class GameManager : MonoBehaviour
             Destroy(shopInstance.gameObject);
 
         StartGame(); // Запуск гри заново
+    }
+
+    public void StartRound()
+    {
+
+    }
+
+    // Метод для показу ConfirmationUI
+    public void ShowConfirmationToStartExploration()
+    {
+        if (menuController == null)
+        {
+            Debug.LogError("MenuController не призначений у GameManager.");
+            return;
+        }
+
+        // Створюємо UnityEvent для кнопки "Так"
+        UnityEngine.Events.UnityEvent onYesEvent = new UnityEngine.Events.UnityEvent();
+        onYesEvent.AddListener(StartRound);
+
+        // Викликаємо метод MenuController для ініціалізації ConfirmationUI
+        menuController.ShowConfirmation(
+            new List<UnityEngine.Events.UnityEvent> { onYesEvent },
+            new List<UnityEngine.Events.UnityEvent>(), // Пустий список для кнопки "Ні"
+            "Are you ready to start the exploration?"
+        );
     }
 }

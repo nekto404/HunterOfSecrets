@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -109,5 +110,16 @@ public class MenuController : MonoBehaviour
 
     public void ShowWinScreen()
     {
+    }
+
+    public void ShowConfirmation(List<UnityEngine.Events.UnityEvent> yesEvents, List<UnityEngine.Events.UnityEvent> noEvents, string message)
+    {
+        if (ConfirmationUI == null)
+        {
+            Debug.LogError("ConfirmationUI не призначений у MenuController.");
+            return;
+        }
+
+        ConfirmationUI.Initialize(yesEvents, noEvents, message);
     }
 }
