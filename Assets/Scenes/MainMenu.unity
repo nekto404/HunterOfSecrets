@@ -5628,7 +5628,7 @@ MonoBehaviour:
   itemUIPrefab: {fileID: 5092804435185855796, guid: 68006c9ab86125d49925fdaebbe106ac, type: 3}
   refreshUIPrefab: {fileID: 5092804435185855796, guid: 69db8dcc00c34d84c857370537b8427b, type: 3}
   upgradeUIPrefab: {fileID: 5092804435185855796, guid: 69db8dcc00c34d84c857370537b8427b, type: 3}
-  refreshIcon: {fileID: -8687029706193621143, guid: 61c2ff56e42e8fe4cb8c381e318140ec, type: 3}
+  refreshIcon: {fileID: -8827393503747229433, guid: 1e5b704a08d098b4694c8e66b33eba30, type: 3}
   upgradeIcon: {fileID: -6415490079858998490, guid: 89fcab06c86598649b9f150ef51ff029, type: 3}
 --- !u!1 &1193869622
 GameObject:

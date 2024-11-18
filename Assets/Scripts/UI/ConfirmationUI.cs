@@ -32,6 +32,7 @@ public class ConfirmationUI : MonoBehaviour
     /// <param name="message">Текст повідомлення, який буде відображено.</param>
     public void Initialize(List<UnityEvent> yesActions, List<UnityEvent> noActions, string message)
     {
+        gameObject.SetActive(true);
         // Зберігаємо списки подій
         yesEvents = yesActions;
         noEvents = noActions;
@@ -43,7 +44,7 @@ public class ConfirmationUI : MonoBehaviour
         }
 
         // Робимо UI активним
-        gameObject.SetActive(true);
+
     }
 
     /// <summary>

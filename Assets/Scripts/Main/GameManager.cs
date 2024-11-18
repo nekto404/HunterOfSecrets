@@ -93,19 +93,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // Створюємо або очищаємо UnityEvent
         UnityEvent onYesEvent = new UnityEvent();
+        onYesEvent.RemoveAllListeners(); // Очищаємо слухачів перед додаванням нових
+
+        // Додаємо слухача для початку раунду
         onYesEvent.AddListener(StartRound);
 
+        // Викликаємо метод MenuController для ініціалізації ConfirmationUI
         menuController.ShowConfirmation(
             new List<UnityEvent> { onYesEvent },
-            new List<UnityEvent>(),
+            new List<UnityEvent>(), // Пустий список для кнопки "Ні"
             "Are you ready to start the exploration?"
         );
     }
 
     public void StartRound()
     {
-        Debug.Log("Спроба почати");
+        Debug.Log("Раунд розпочато!");
         if (currentLocation == null)
         {
             Debug.LogError("Неможливо розпочати раунд: локація не завантажена.");
@@ -130,7 +135,6 @@ public class GameManager : MonoBehaviour
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
-                Debug.Log($"Залишилось часу: {timeRemaining:F2} секунд");
             }
             else
             {
