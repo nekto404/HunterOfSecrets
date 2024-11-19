@@ -15,13 +15,17 @@ public class Item : ScriptableObject
 [Serializable]
 public enum Trigger
 {
-    GetPlayerEffectStacks
+    GetPlayerEffectStacks,
+    RoundStart,
+    TileEnter
 }
 
 [Serializable]
 public enum Effect
 {
-    RemoveStackWithChance
+    RemoveStackWithChance,
+    AbbreviatedPassageOfTile,
+    AddStackWithChance
 }
 
 [Serializable]
@@ -33,4 +37,5 @@ public class Skill
     public int EffectValue;
     public int EffectValueAdditional;
     public string EffectDescription;
+    public bool OneTimeUse;
 }

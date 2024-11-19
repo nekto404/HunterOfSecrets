@@ -132,12 +132,12 @@ TextureImporter:
       name: refresh_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 9
-        width: 10
-        height: 17
+        x: 5
+        y: 5
+        width: 22
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -154,12 +154,12 @@ TextureImporter:
       name: refresh_1
       rect:
         serializedVersion: 2
-        x: 15
-        y: 8
-        width: 12
-        height: 16
+        x: 14
+        y: 5
+        width: 13
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -176,7 +176,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1eafe0988ed809b47baca8a8f04eb967
     internalID: 0
     vertices: []
     indices: 
