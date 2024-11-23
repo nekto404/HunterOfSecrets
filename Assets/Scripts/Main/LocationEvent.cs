@@ -36,7 +36,8 @@ public class LocationEvent : ScriptableObject
     public string eventName;                           // Назва події
     [TextArea]
     public string description;                         // Опис події
-    public Sprite sprite;                              // Спрайт для візуального відображення події
+    public Sprite spriteOriginal;                              // Спрайт для візуального відображення події
+    public Sprite spriteAlter;                              // Спрайт для візуального відображення події
     [Range(0, 100)]
     public int successChance;                          // Базовий шанс на успіх у відсотках (0-100)
 

@@ -36,8 +36,10 @@ public class LocationUI : MonoBehaviour
 
     [Header("ActionChoseUI")]
     [SerializeField] private GameObject ActionChoseUI;
-    [SerializeField] private Button firstButtonQuestionUI;   
-    [SerializeField] private Button secondButtonQuestionUI;
+    [SerializeField] private Button firstButtonChoseUI;   
+    [SerializeField] private Button secondButtonChoseUI;
+    [SerializeField] private Image firstImageChoseUI;
+    [SerializeField] private Image secondImageChoseUI;
 
     [Header("RunUI")]
     [SerializeField] private GameObject RunUI;
@@ -140,7 +142,16 @@ public class LocationUI : MonoBehaviour
         ItemRewardUI.SetActive(true);
     }
 
+    public void ShowActionChoseUI(LocationEvent locationEvent, List<UnityEvent> firstActions, List<UnityEvent> secondActions)
+    {
+        gameObject.SetActive(true);
 
+        firstImageChoseUI.sprite = locationEvent.spriteOriginal;
+        secondImageChoseUI.sprite = locationEvent.spriteAlter;
+
+        firstEventsQuestionUI= firstActions;
+        secondEventsQuestionUI = secondActions;
+    }
 
     private void Awake()
     {
@@ -150,6 +161,8 @@ public class LocationUI : MonoBehaviour
         skipButtonTextResultUI.onClick.AddListener(OnYesClicked);
         secondButtonPathUI.onClick.AddListener(OnNoClicked);
         firstButtonPathUI.onClick.AddListener(OnYesClicked);
+        firstButtonChoseUI.onClick.AddListener(OnYesClicked);
+        secondButtonChoseUI.onClick.AddListener(OnNoClicked);
 
     }
 
