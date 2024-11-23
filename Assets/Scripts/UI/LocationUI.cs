@@ -72,9 +72,45 @@ public class LocationUI : MonoBehaviour
         firstEventsQuestionUI = skipActions;
     }
 
-    public void ShowPathUI(int[] PathOne, int[] PathTwo)
+    public void ShowPathUI(int[] PathOne, int[] PathTwo, List<UnityEvent> firstActions, List<UnityEvent> secondActions)
     {
+        foreach (var tile in PathOne)
+        {
 
+                // Створюємо новий UI-елемент для предмета
+                GameObject newItemUI = Instantiate(tilePrefabPathUI, scrollControllerFirstPathUI.content);
+                // Встановлюємо спрайт предмета
+                var itemImage = newItemUI.transform.Find("ItemImage").GetComponent<Image>();
+                if (itemImage != null)
+                {
+                    itemImage.sprite = TileManager.Instance.GetTileById(tile).sprite; // Встановлюємо спрайт з даних предмета
+                }
+                else
+                {
+                    Debug.LogWarning("UI-елемент не містить об'єкт ItemImage або компонент Image.");
+                }
+        }
+        foreach (var tile in PathTwo)
+        {
+
+            // Створюємо новий UI-елемент для предмета
+            GameObject newItemUI = Instantiate(tilePrefabPathUI, scrollControllerSecondPathUI.content);
+            // Встановлюємо спрайт предмета
+            var itemImage = newItemUI.transform.Find("ItemImage").GetComponent<Image>();
+            if (itemImage != null)
+            {
+                itemImage.sprite = TileManager.Instance.GetTileById(tile).sprite; // Встановлюємо спрайт з даних предмета
+            }
+            else
+            {
+                Debug.LogWarning("UI-елемент не містить об'єкт ItemImage або компонент Image.");
+            }
+        }
+        gameObject.SetActive(true);
+
+
+        firstEventsQuestionUI = firstActions;
+        secondEventsQuestionUI = secondActions;
     }
 
     public void ShowItemRewardUI(Item item)
@@ -112,6 +148,8 @@ public class LocationUI : MonoBehaviour
         yesButtonQuestionUI.onClick.AddListener(OnYesClicked);
         noButtonQuestionUI.onClick.AddListener(OnNoClicked);
         skipButtonTextResultUI.onClick.AddListener(OnYesClicked);
+        secondButtonPathUI.onClick.AddListener(OnNoClicked);
+        firstButtonPathUI.onClick.AddListener(OnYesClicked);
 
     }
 
