@@ -43,10 +43,10 @@ public class LocationUI : MonoBehaviour
 
     [Header("RunUI")]
     [SerializeField] private GameObject RunUI;
-    [SerializeField] private Button trackerRunUI;
-    [SerializeField] private Button firstTileRunUI;
-    [SerializeField] private Button secondTileRunUI;
-    [SerializeField] private Button thirdTileRunUI;
+    [SerializeField] private Image trackerRunUI;
+    [SerializeField] private Image firstTileRunUI;
+    [SerializeField] private Image secondTileRunUI;
+    [SerializeField] private Image thirdTileRunUI;
 
     public void ShowQuestionUI(List<UnityEvent> yesActions, List<UnityEvent> noActions, string message)
     {
@@ -108,7 +108,7 @@ public class LocationUI : MonoBehaviour
                 Debug.LogWarning("UI-елемент не містить об'єкт ItemImage або компонент Image.");
             }
         }
-        gameObject.SetActive(true);
+        PathUI.SetActive(true);
 
 
         firstEventsQuestionUI = firstActions;
@@ -144,13 +144,37 @@ public class LocationUI : MonoBehaviour
 
     public void ShowActionChoseUI(LocationEvent locationEvent, List<UnityEvent> firstActions, List<UnityEvent> secondActions)
     {
-        gameObject.SetActive(true);
+        ActionChoseUI.SetActive(true);
 
         firstImageChoseUI.sprite = locationEvent.spriteOriginal;
         secondImageChoseUI.sprite = locationEvent.spriteAlter;
 
         firstEventsQuestionUI= firstActions;
         secondEventsQuestionUI = secondActions;
+    }
+
+    public void ShowRunUI(Sprite firstTile, Sprite secondTile, Sprite thirdTile, float progress)
+    {
+        RunUI.SetActive(true);
+        // Призначення спрайтів для тайлів
+        firstTileRunUI.sprite = firstTile;
+        secondTileRunUI.sprite = secondTile;
+        thirdTileRunUI.sprite = thirdTile;
+
+        // Встановлення видимості для елементів RunUI
+        RunUI.SetActive(true);
+
+        // Розрахунок позиції трекера
+        RectTransform tileRect = secondTileRunUI.GetComponent<RectTransform>();
+        RectTransform trackerRect = trackerRunUI.GetComponent<RectTransform>();
+
+        float tileWidth = tileRect.rect.width; // Ширина тайла
+        float startX = tileRect.anchoredPosition.x - (tileWidth / 2); // Ліва межа
+        float endX = tileRect.anchoredPosition.x + (tileWidth / 2); // Права межа
+
+        // Обчислення X-позиції трекера
+        float trackerX = Mathf.Lerp(startX, endX, progress);
+        trackerRect.anchoredPosition = new Vector2(trackerX, tileRect.anchoredPosition.y);
     }
 
     private void Awake()
