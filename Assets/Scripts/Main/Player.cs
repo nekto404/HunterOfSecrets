@@ -78,7 +78,7 @@ public class Player
 
     public void ApplyStatus(int statusIndex)
     {
-        if (statusIndex >= 0 && statusIndex < currentStatuses.Length)
+        if (statusIndex > 0 && statusIndex < currentStatuses.Length)
         {
             currentStatuses[statusIndex]++;
             Debug.Log("Status " + statusIndex + " applied. Current count: " + currentStatuses[statusIndex]);

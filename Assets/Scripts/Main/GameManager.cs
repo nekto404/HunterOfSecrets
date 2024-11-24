@@ -1,6 +1,10 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +18,9 @@ public class GameManager : MonoBehaviour
 
     private float timeRemaining; // Залишок часу
     private bool isRoundActive = false;
+
+    private List<int> fullPath = new List<int>();
+    private Coroutine pathTraversalCoroutine;
 
     private void Awake()
     {
@@ -161,8 +168,63 @@ public class GameManager : MonoBehaviour
 
     private void OnPathChosen(Path chosenPath)
     {
-        Debug.Log($"Гравець обрав шлях із {chosenPath.pathSteps.Length} кроками!");
+
+        // Додаємо обраний шлях до загального маршруту
+        fullPath.AddRange(chosenPath.pathSteps);
+
+        // Закриваємо UI
         menuController.LocationUI.HideAll();
+
+        // Розпочинаємо проходження обраного шляху
+        if (pathTraversalCoroutine != null)
+        {
+            StopCoroutine(pathTraversalCoroutine);
+        }
+        pathTraversalCoroutine = StartCoroutine(TraversePath(chosenPath.pathSteps));
+    }
+
+    private IEnumerator TraversePath(int[] pathStepIds)
+    {
+        foreach (int tileId in pathStepIds)
+        {
+            // Отримуємо тайл за ID
+            Tile currentTile = TileManager.Instance.GetTileById(tileId);
+            if (currentTile == null)
+            {
+                Debug.LogWarning($"Тайл із ID {tileId} не знайдено. Пропущено.");
+                continue;
+            }
+
+            Debug.Log($"Гравець починає проходити тайл {currentTile.tileName} (ID: {tileId}) із часом {currentTile.travelTime}s");
+
+            float timeSpent = 0f;
+
+            // Проходимо тайл
+            while (timeSpent < currentTile.travelTime)
+            {
+                yield return new WaitForSeconds(0.5f); // Чекаємо 0.5 секунди
+                timeSpent += 0.5f;
+
+                // Якщо є негативний ефект, застосовуємо його
+                if (currentTile.negativeEffect > 0)
+                {
+                    ApplyNegativeEffect(currentTile.negativeEffect);
+                }
+
+                Debug.Log($"Час на тайлі: {timeSpent}/{currentTile.travelTime}");
+            }
+
+            Debug.Log($"Гравець завершив тайл {currentTile.tileName} (ID: {tileId})");
+        }
+
+        Debug.Log("Гравець завершив обраний шлях.");
+        // Тут можна викликати логіку для вибору нового шляху або завершення раунду
+    }
+
+    private void ApplyNegativeEffect(int effectValue)
+    {
+        Debug.Log($"Гравець отримує негативний ефект: {effectValue}");
+        Player.Instance.ApplyStatus(effectValue); // Логіка в класі `Player`
     }
 
     private void Update()
