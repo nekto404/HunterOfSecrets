@@ -55,7 +55,7 @@ public class LocationUI : MonoBehaviour
             messageTextQuestionUI.text = message;
         }
 
-        gameObject.SetActive(true);
+        QuestionUI.SetActive(true);
 
         firstEventsQuestionUI = yesActions;
         secondEventsQuestionUI = noActions;
@@ -69,13 +69,14 @@ public class LocationUI : MonoBehaviour
             messageTextQuestionUI.text = message;
         }
 
-        gameObject.SetActive(true);
+        TextResultUI.SetActive(true);
 
         firstEventsQuestionUI = skipActions;
     }
 
     public void ShowPathUI(int[] PathOne, int[] PathTwo, List<UnityEvent> firstActions, List<UnityEvent> secondActions)
     {
+        PathUI.SetActive(true);
         foreach (var tile in PathOne)
         {
 
@@ -108,7 +109,7 @@ public class LocationUI : MonoBehaviour
                 Debug.LogWarning("UI-елемент не містить об'єкт ItemImage або компонент Image.");
             }
         }
-        PathUI.SetActive(true);
+
 
 
         firstEventsQuestionUI = firstActions;
@@ -117,6 +118,7 @@ public class LocationUI : MonoBehaviour
 
     public void ShowItemRewardUI(Item item)
     {
+        ItemRewardUI.SetActive(true);
         rewardItem = item;
 
         // Створюємо візуальне представлення предмета
@@ -139,8 +141,11 @@ public class LocationUI : MonoBehaviour
         }
 
         // Активуємо панель нагороди
-        ItemRewardUI.SetActive(true);
+    
     }
+
+
+
 
     public void ShowActionChoseUI(LocationEvent locationEvent, List<UnityEvent> firstActions, List<UnityEvent> secondActions)
     {
@@ -161,9 +166,6 @@ public class LocationUI : MonoBehaviour
         secondTileRunUI.sprite = secondTile;
         thirdTileRunUI.sprite = thirdTile;
 
-        // Встановлення видимості для елементів RunUI
-        RunUI.SetActive(true);
-
         // Розрахунок позиції трекера
         RectTransform tileRect = secondTileRunUI.GetComponent<RectTransform>();
         RectTransform trackerRect = trackerRunUI.GetComponent<RectTransform>();
@@ -175,6 +177,16 @@ public class LocationUI : MonoBehaviour
         // Обчислення X-позиції трекера
         float trackerX = Mathf.Lerp(startX, endX, progress);
         trackerRect.anchoredPosition = new Vector2(trackerX, tileRect.anchoredPosition.y);
+    }
+
+    public void HiideAll()
+    {
+        RunUI.SetActive(false);
+        ActionChoseUI.SetActive(false);
+        ItemRewardUI.SetActive(false);
+        PathUI.SetActive(false);
+        TextResultUI.SetActive(false);
+        QuestionUI.SetActive(false);
     }
 
     private void Awake()
