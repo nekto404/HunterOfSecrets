@@ -83,7 +83,7 @@ public class LocationUI : MonoBehaviour
                 // Створюємо новий UI-елемент для предмета
                 GameObject newItemUI = Instantiate(tilePrefabPathUI, scrollControllerFirstPathUI.content);
                 // Встановлюємо спрайт предмета
-                var itemImage = newItemUI.transform.Find("ItemImage").GetComponent<Image>();
+                var itemImage = newItemUI.GetComponent<Image>();
                 if (itemImage != null)
                 {
                     itemImage.sprite = TileManager.Instance.GetTileById(tile).sprite; // Встановлюємо спрайт з даних предмета
@@ -99,7 +99,7 @@ public class LocationUI : MonoBehaviour
             // Створюємо новий UI-елемент для предмета
             GameObject newItemUI = Instantiate(tilePrefabPathUI, scrollControllerSecondPathUI.content);
             // Встановлюємо спрайт предмета
-            var itemImage = newItemUI.transform.Find("ItemImage").GetComponent<Image>();
+            var itemImage = newItemUI.GetComponent<Image>();
             if (itemImage != null)
             {
                 itemImage.sprite = TileManager.Instance.GetTileById(tile).sprite; // Встановлюємо спрайт з даних предмета
@@ -179,7 +179,7 @@ public class LocationUI : MonoBehaviour
         trackerRect.anchoredPosition = new Vector2(trackerX, tileRect.anchoredPosition.y);
     }
 
-    public void HiideAll()
+    public void HideAll()
     {
         RunUI.SetActive(false);
         ActionChoseUI.SetActive(false);

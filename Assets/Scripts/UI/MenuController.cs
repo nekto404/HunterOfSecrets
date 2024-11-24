@@ -12,6 +12,7 @@ public class MenuController : MonoBehaviour
     public GameObject GameLocation;
     public GameObject LoseScreen;
     public GameObject WinScreen;
+    public LocationUI LocationUI;
     public ConfirmationUI ConfirmationUI;
 
     public Slider MusicVolumeSlider;

@@ -1650,7 +1650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &331629368
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3352,6 +3352,7 @@ MonoBehaviour:
   GameLocation: {fileID: 921652673}
   LoseScreen: {fileID: 2008468892}
   WinScreen: {fileID: 380381744}
+  LocationUI: {fileID: 921652675}
   ConfirmationUI: {fileID: 24858920}
   MusicVolumeSlider: {fileID: 1629472390}
   SFXVolumeSlider: {fileID: 2016059143}
@@ -6619,7 +6620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &885879508
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6834,7 +6835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &921652674
 RectTransform:
   m_ObjectHideFlags: 0

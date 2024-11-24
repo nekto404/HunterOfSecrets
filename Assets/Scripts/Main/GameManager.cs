@@ -126,6 +126,43 @@ public class GameManager : MonoBehaviour
         isRoundActive = true;
         menuController.GameShop.SetActive(false);
         menuController.GameLocation.SetActive(true);
+
+        // Викликаємо вибір шляху через ShowPathSelection
+        ShowPathSelection();
+    }
+
+    private void ShowPathSelection()
+    {
+        // Отримуємо два випадкових шляхи через метод у Location
+        var randomPaths = currentLocation.GetTwoRandomPaths();
+
+        if (randomPaths == null || randomPaths.Count < 2)
+        {
+            Debug.LogError("Не вдалося отримати два випадкових шляхи.");
+            return;
+        }
+
+        // Налаштовуємо дії для першого шляху
+        var firstPathActions = new List<UnityEngine.Events.UnityEvent>();
+        var firstAction = new UnityEngine.Events.UnityEvent();
+        firstAction.AddListener(() => OnPathChosen(randomPaths[0])); // Передаємо перший шлях
+        firstPathActions.Add(firstAction);
+
+        // Налаштовуємо дії для другого шляху
+        var secondPathActions = new List<UnityEngine.Events.UnityEvent>();
+        var secondAction = new UnityEngine.Events.UnityEvent();
+        secondAction.AddListener(() => OnPathChosen(randomPaths[1])); // Передаємо другий шлях
+        secondPathActions.Add(secondAction);
+
+        // Показуємо UI для вибору шляхів
+        menuController.LocationUI.ShowPathUI(randomPaths[0].pathSteps, randomPaths[1].pathSteps, firstPathActions, secondPathActions);
+    }
+
+
+    private void OnPathChosen(Path chosenPath)
+    {
+        Debug.Log($"Гравець обрав шлях із {chosenPath.pathSteps.Length} кроками!");
+        menuController.LocationUI.HideAll();
     }
 
     private void Update()
