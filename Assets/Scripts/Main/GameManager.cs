@@ -185,41 +185,57 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator TraversePath(int[] pathStepIds)
     {
-        foreach (int tileId in pathStepIds)
+        for (int i = 0; i < pathStepIds.Length; i++)
         {
-            // Отримуємо тайл за ID
-            Tile currentTile = TileManager.Instance.GetTileById(tileId);
+            // Отримуємо поточний тайл за його ID
+            Tile currentTile = TileManager.Instance.GetTileById(pathStepIds[i]);
             if (currentTile == null)
             {
-                Debug.LogWarning($"Тайл із ID {tileId} не знайдено. Пропущено.");
+                Debug.LogWarning($"Тайл із ID {pathStepIds[i]} не знайдено. Пропущено.");
                 continue;
             }
 
-            Debug.Log($"Гравець починає проходити тайл {currentTile.tileName} (ID: {tileId}) із часом {currentTile.travelTime}s");
+            // Отримуємо спрайти для трьох тайлів
+            Sprite previousTileSprite = i > 0 ? TileManager.Instance.GetTileById(pathStepIds[i - 1]).sprite : null;
+            Sprite currentTileSprite = currentTile.sprite;
+            Sprite nextTileSprite = i < pathStepIds.Length - 1 ? TileManager.Instance.GetTileById(pathStepIds[i + 1]).sprite : null;
 
             float timeSpent = 0f;
+            float updateInterval = 0.1f; // Інтервал оновлення (10 разів на секунду)
 
-            // Проходимо тайл
+            // Відображаємо початковий стан прогресу
+            menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, 0f);
+
+            // Починаємо проходження тайла
             while (timeSpent < currentTile.travelTime)
             {
-                yield return new WaitForSeconds(0.5f); // Чекаємо 0.5 секунди
-                timeSpent += 0.5f;
+                yield return new WaitForSeconds(updateInterval); // Чекаємо 0.1 секунди
+                timeSpent += updateInterval;
 
-                // Якщо є негативний ефект, застосовуємо його
-                if (currentTile.negativeEffect > 0)
+                // Оновлюємо прогрес у LocationUI
+                float progress = Mathf.Clamp01(timeSpent / currentTile.travelTime);
+                menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, progress);
+
+                // Додаємо негативний ефект, якщо він є, та інтервал проходження збігається
+                if (currentTile.negativeEffect > 0 && Mathf.FloorToInt(timeSpent / updateInterval) > Mathf.FloorToInt((timeSpent - updateInterval) / updateInterval))
                 {
                     ApplyNegativeEffect(currentTile.negativeEffect);
                 }
 
-                Debug.Log($"Час на тайлі: {timeSpent}/{currentTile.travelTime}");
+                Debug.Log($"Прогрес на тайлі {currentTile.tileName}: {progress * 100}%");
             }
 
-            Debug.Log($"Гравець завершив тайл {currentTile.tileName} (ID: {tileId})");
+            Debug.Log($"Гравець завершив тайл {currentTile.tileName} (ID: {pathStepIds[i]})");
         }
 
+        // Закриваємо RunUI після завершення шляху
+        menuController.LocationUI.HideAll();
+
         Debug.Log("Гравець завершив обраний шлях.");
-        // Тут можна викликати логіку для вибору нового шляху або завершення раунду
+        // Логіка після завершення проходження шляху
     }
+
+
 
     private void ApplyNegativeEffect(int effectValue)
     {
