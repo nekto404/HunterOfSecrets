@@ -232,10 +232,38 @@ public class GameManager : MonoBehaviour
         menuController.LocationUI.HideAll();
 
         Debug.Log("Гравець завершив обраний шлях.");
+
+        // Вибір випадкової події з поточної локації
+        if (currentLocation.events.Count > 0)
+        {
+            LocationEvent randomEvent = currentLocation.events[UnityEngine.Random.Range(0, currentLocation.events.Count)];
+            ShowLocationEvent(randomEvent);
+        }
+        else
+        {
+            Debug.LogWarning("У поточній локації немає доступних подій.");
+        }
         // Логіка після завершення проходження шляху
     }
 
+    private void ShowLocationEvent(LocationEvent locationEvent)
+    {
+        // Формуємо списки дій (UnityEvent) для події
+        List<UnityEvent> firstActions = new List<UnityEvent>();
+        List<UnityEvent> secondActions = new List<UnityEvent>();
 
+        // Для прикладу додаємо дві базові події
+        UnityEvent firstAction = new UnityEvent();
+        firstAction.AddListener(() => Debug.Log("Гравець обрав перший варіант події."));
+        firstActions.Add(firstAction);
+
+        UnityEvent secondAction = new UnityEvent();
+        secondAction.AddListener(() => Debug.Log("Гравець обрав другий варіант події."));
+        secondActions.Add(secondAction);
+
+        // Відображаємо UI з подією
+        menuController.LocationUI.ShowActionChoseUI(locationEvent, firstActions, secondActions);
+    }
 
     private void ApplyNegativeEffect(int effectValue)
     {

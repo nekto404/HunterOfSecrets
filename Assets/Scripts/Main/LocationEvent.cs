@@ -11,22 +11,25 @@ public class EventOutcome
 
     public enum OutcomeType
     {
-        Coins,                                   // Нагорода у вигляді монет
-        StatusEffect,                            // Накладання або зняття статусу
-        ItemReward,                              // Нагорода у вигляді предмета
+        Coins,                                   
+        StatusEffect,                            
+        ItemReward,                              
+        TimeLose
     }
 
     public OutcomeType outcomeType;              // Тип ефекту
-    public int value;                            // Значення ефекту (кількість монет, зміна здоров'я)
+    public int value;
+    public int effectType;
     public Item itemReward;                      // Предмет у разі нагороди (опціонально)
 
-    public EventOutcome(string description, int chance, OutcomeType outcomeType, int value, Item item = null)
+    public EventOutcome(string description, int chance, OutcomeType outcomeType, int value, Item item = null, int effectType = 0)
     {
         this.description = description;
         this.chance = chance;
         this.outcomeType = outcomeType;
         this.value = value;
         this.itemReward = item;
+        this.effectType = effectType;
     }
 }
 
