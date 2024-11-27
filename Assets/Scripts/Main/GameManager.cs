@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -248,21 +246,77 @@ public class GameManager : MonoBehaviour
 
     private void ShowLocationEvent(LocationEvent locationEvent)
     {
-        // Формуємо списки дій (UnityEvent) для події
+        // Формуємо списки дій для події
         List<UnityEvent> firstActions = new List<UnityEvent>();
         List<UnityEvent> secondActions = new List<UnityEvent>();
 
-        // Для прикладу додаємо дві базові події
-        UnityEvent firstAction = new UnityEvent();
-        firstAction.AddListener(() => Debug.Log("Гравець обрав перший варіант події."));
-        firstActions.Add(firstAction);
+        // Перший варіант: Гравець бере участь у події
+        UnityEvent participateAction = new UnityEvent();
+        participateAction.AddListener(() =>
+        {
+            if (UnityEngine.Random.Range(0, 100) < locationEvent.successChance)
+            {
+                // Успіх: отримати нагороду
+                EventOutcome reward = locationEvent.GetRandomReward();
+                ProcessEventOutcome(reward);
+                Debug.Log($"Гравець успішно виконав подію '{locationEvent.eventName}': {reward.description}");
+            }
+            else
+            {
+                // Провал: отримати покарання
+                EventOutcome penalty = locationEvent.GetRandomPenalty();
+                ProcessEventOutcome(penalty);
+                Debug.Log($"Гравець провалив подію '{locationEvent.eventName}': {penalty.description}");
+            }
+        });
+        firstActions.Add(participateAction);
 
-        UnityEvent secondAction = new UnityEvent();
-        secondAction.AddListener(() => Debug.Log("Гравець обрав другий варіант події."));
-        secondActions.Add(secondAction);
+        // Другий варіант: Гравець пропускає подію
+        UnityEvent skipAction = new UnityEvent();
+        skipAction.AddListener(() =>
+        {
+            Debug.Log($"Гравець пропустив подію '{locationEvent.eventName}'.");
+        });
+        secondActions.Add(skipAction);
 
         // Відображаємо UI з подією
         menuController.LocationUI.ShowActionChoseUI(locationEvent, firstActions, secondActions);
+
+        // Логи для відладки
+        Debug.Log($"Подія '{locationEvent.eventName}' показана гравцеві.");
+        Debug.Log($"Опис події: {locationEvent.description}");
+    }
+
+    public void ProcessEventOutcome(EventOutcome outcome)
+    {
+        switch (outcome.outcomeType)
+        {
+            case EventOutcome.OutcomeType.Coins:
+                Player.Instance.AddCoins( outcome.value); // Змінюємо кількість монет
+                Debug.Log($"[UI Заглушка] Ви {(outcome.value > 0 ? "отримали" : "втратили")} {Mathf.Abs(outcome.value)} монет!");
+                break;
+
+            case EventOutcome.OutcomeType.StatusEffect:
+                if (outcome.effectType >= 0 && outcome.effectType < Player.Instance.currentStatuses.Length)
+                {
+                    for (int i = 0; i < outcome.value; i++)
+                    {
+                        Player.Instance.ApplyStatus(outcome.effectType);
+                    }
+
+                    Debug.Log($"[UI Заглушка] На вас накладено ефект: {outcome.description}");
+                }
+                break;
+
+            case EventOutcome.OutcomeType.ItemReward:
+                Debug.Log($"[UI Заглушка] Ви отримали предмет: {outcome.itemReward.Name}. Відкрийте інвентар, щоб додати.");
+                break;
+
+            case EventOutcome.OutcomeType.TimeLose:
+                timeRemaining -= outcome.value;
+                Debug.Log($"[UI Заглушка] Ви втратили {outcome.value} хвилин.");
+                break;
+        }
     }
 
     private void ApplyNegativeEffect(int effectValue)
