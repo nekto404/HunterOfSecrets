@@ -277,6 +277,7 @@ public class GameManager : MonoBehaviour
         skipAction.AddListener(() =>
         {
             Debug.Log($"Гравець пропустив подію '{locationEvent.eventName}'.");
+            ShowPathSelection();
         });
         secondActions.Add(skipAction);
 
