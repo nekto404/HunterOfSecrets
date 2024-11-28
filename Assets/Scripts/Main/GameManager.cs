@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     private List<int> fullPath = new List<int>();
     private Coroutine pathTraversalCoroutine;
 
+    public int secretsFound = 0; // Кількість знайдених секретів
+    public int secretsRequiredForEvacuation = 3;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -287,6 +289,15 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Опис події: {locationEvent.description}");
     }
 
+    public void CheckEvacuationAvailability()
+    {
+        if (secretsFound >= secretsRequiredForEvacuation)
+        {
+            Debug.Log("Відкрито можливість евакуації!");
+            // TODO: Відобразити UI для евакуації
+        }
+    }
+
     public void ProcessEventOutcome(EventOutcome outcome)
     {
         switch (outcome.outcomeType)
@@ -315,6 +326,11 @@ public class GameManager : MonoBehaviour
             case EventOutcome.OutcomeType.TimeLose:
                 timeRemaining -= outcome.value;
                 Debug.Log($"[UI Заглушка] Ви втратили {outcome.value} хвилин.");
+                break;
+            case EventOutcome.OutcomeType.SecretFounded:
+                GameManager.Instance.secretsFound++;
+                Debug.Log("Гравець знайшов секрет!");
+                GameManager.Instance.CheckEvacuationAvailability();
                 break;
         }
     }

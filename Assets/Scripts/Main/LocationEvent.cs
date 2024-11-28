@@ -13,7 +13,8 @@ public class EventOutcome
     {
         Coins,                                   
         StatusEffect,                            
-        ItemReward,                              
+        ItemReward,  
+        SecretFounded,
         TimeLose
     }
 

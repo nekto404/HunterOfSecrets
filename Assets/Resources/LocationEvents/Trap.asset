@@ -20,7 +20,7 @@ MonoBehaviour:
   rewards:
   - description: Destroyd trap
     chance: 100
-    outcomeType: 3
+    outcomeType: 4
     value: 1
     effectType: 0
     itemReward: {fileID: 0}
