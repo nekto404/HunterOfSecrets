@@ -335,7 +335,7 @@ public class GameManager : MonoBehaviour
 
             case EventOutcome.OutcomeType.TimeLose:
                 timeRemaining -= outcome.value;
-                message = $"You lost {outcome.value} minutes.";
+                message = $"You lost {outcome.value} seconds.";
                 break;
 
             case EventOutcome.OutcomeType.SecretFounded:

@@ -81,25 +81,39 @@ public class LocationUI : MonoBehaviour
     public void ShowPathUI(int[] PathOne, int[] PathTwo, List<UnityEvent> firstActions, List<UnityEvent> secondActions)
     {
         PathUI.SetActive(true);
+
+        // Очищення старих елементів у першому шляху
+        foreach (Transform child in scrollControllerFirstPathUI.content)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Очищення старих елементів у другому шляху
+        foreach (Transform child in scrollControllerSecondPathUI.content)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Додавання нових елементів для першого шляху
         foreach (var tile in PathOne)
         {
-
-                // Створюємо новий UI-елемент для предмета
-                GameObject newItemUI = Instantiate(tilePrefabPathUI, scrollControllerFirstPathUI.content);
-                // Встановлюємо спрайт предмета
-                var itemImage = newItemUI.GetComponent<Image>();
-                if (itemImage != null)
-                {
-                    itemImage.sprite = TileManager.Instance.GetTileById(tile).sprite; // Встановлюємо спрайт з даних предмета
-                }
-                else
-                {
-                    Debug.LogWarning("UI-елемент не містить об'єкт ItemImage або компонент Image.");
-                }
+            // Створюємо новий UI-елемент для предмета
+            GameObject newItemUI = Instantiate(tilePrefabPathUI, scrollControllerFirstPathUI.content);
+            // Встановлюємо спрайт предмета
+            var itemImage = newItemUI.GetComponent<Image>();
+            if (itemImage != null)
+            {
+                itemImage.sprite = TileManager.Instance.GetTileById(tile).sprite; // Встановлюємо спрайт з даних предмета
+            }
+            else
+            {
+                Debug.LogWarning("UI-елемент не містить об'єкт ItemImage або компонент Image.");
+            }
         }
+
+        // Додавання нових елементів для другого шляху
         foreach (var tile in PathTwo)
         {
-
             // Створюємо новий UI-елемент для предмета
             GameObject newItemUI = Instantiate(tilePrefabPathUI, scrollControllerSecondPathUI.content);
             // Встановлюємо спрайт предмета
@@ -114,8 +128,7 @@ public class LocationUI : MonoBehaviour
             }
         }
 
-
-
+        // Зберігаємо списки подій
         firstEventsQuestionUI = firstActions;
         secondEventsQuestionUI = secondActions;
     }
@@ -175,8 +188,8 @@ public class LocationUI : MonoBehaviour
         RectTransform trackerRect = trackerRunUI.GetComponent<RectTransform>();
 
         float tileWidth = tileRect.rect.width; // Ширина тайла
-        float startX = tileRect.anchoredPosition.x - (tileWidth / 2); // Ліва межа
-        float endX = tileRect.anchoredPosition.x + (tileWidth / 2); // Права межа
+        float startX = tileRect.anchoredPosition.x; //- (tileWidth / 2); // Ліва межа
+        float endX = tileRect.anchoredPosition.x + tileWidth;// (tileWidth / 2); // Права межа
 
         // Обчислення X-позиції трекера
         float trackerX = Mathf.Lerp(startX, endX, progress);
