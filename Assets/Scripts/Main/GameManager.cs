@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -160,7 +159,7 @@ public class GameManager : MonoBehaviour
         var secondAction = new UnityEngine.Events.UnityEvent();
         secondAction.AddListener(() => OnPathChosen(randomPaths[1])); // Передаємо другий шлях
         secondPathActions.Add(secondAction);
-
+        menuController.LocationUI.HideAll();
         // Показуємо UI для вибору шляхів
         menuController.LocationUI.ShowPathUI(randomPaths[0].pathSteps, randomPaths[1].pathSteps, firstPathActions, secondPathActions);
     }
@@ -300,11 +299,27 @@ public class GameManager : MonoBehaviour
 
     public void ProcessEventOutcome(EventOutcome outcome)
     {
+        // List of actions to execute after showing the result
+        List<UnityEvent> skipActions = new List<UnityEvent>();
+        UnityEvent skipAction = new UnityEvent();
+        skipAction.AddListener(() =>
+        {
+            Debug.Log("The player finished viewing the event result.");
+            // Return to path selection
+
+            ShowPathSelection();
+        });
+        skipActions.Add(skipAction);
+
+        string message = string.Empty;
+
         switch (outcome.outcomeType)
         {
             case EventOutcome.OutcomeType.Coins:
-                Player.Instance.AddCoins( outcome.value); // Змінюємо кількість монет
-                Debug.Log($"[UI Заглушка] Ви {(outcome.value > 0 ? "отримали" : "втратили")} {Mathf.Abs(outcome.value)} монет!");
+                Player.Instance.AddCoins(outcome.value);
+                message = outcome.value > 0
+                    ? $"You gained {Mathf.Abs(outcome.value)} coins!"
+                    : $"You lost {Mathf.Abs(outcome.value)} coins!";
                 break;
 
             case EventOutcome.OutcomeType.StatusEffect:
@@ -314,25 +329,44 @@ public class GameManager : MonoBehaviour
                     {
                         Player.Instance.ApplyStatus(outcome.effectType);
                     }
-
-                    Debug.Log($"[UI Заглушка] На вас накладено ефект: {outcome.description}");
+                    message = $"You are affected by: {outcome.description}.";
                 }
-                break;
-
-            case EventOutcome.OutcomeType.ItemReward:
-                Debug.Log($"[UI Заглушка] Ви отримали предмет: {outcome.itemReward.Name}. Відкрийте інвентар, щоб додати.");
                 break;
 
             case EventOutcome.OutcomeType.TimeLose:
                 timeRemaining -= outcome.value;
-                Debug.Log($"[UI Заглушка] Ви втратили {outcome.value} хвилин.");
+                message = $"You lost {outcome.value} minutes.";
                 break;
+
             case EventOutcome.OutcomeType.SecretFounded:
-                GameManager.Instance.secretsFound++;
-                Debug.Log("Гравець знайшов секрет!");
-                GameManager.Instance.CheckEvacuationAvailability();
+                secretsFound++;
+                message = "You found a secret!";
+                CheckEvacuationAvailability();
                 break;
+
+            case EventOutcome.OutcomeType.ItemReward:
+                // Placeholder for item reward handling
+                Debug.Log($"Item found: {outcome.itemReward.Name}. UI implementation pending.");
+                ShowItemRewardPlaceholder(outcome.itemReward);
+                return; // Exit to avoid calling ShowTextResultUI
         }
+
+        if (!string.IsNullOrEmpty(message))
+        {
+            // Display result as text
+            Debug.Log("Send text " + message);
+            menuController.LocationUI.HideAll();
+            menuController.LocationUI.ShowTextResultUI(skipActions, message);
+        }
+    }
+
+    // Метод-заглушка для предмета
+    private void ShowItemRewardPlaceholder(Item itemReward)
+    {
+        Debug.Log($"Тут буде показ UI для предмета: {itemReward.Name}.");
+
+        menuController.LocationUI.HideAll();
+        ShowPathSelection(); // Повернення до вибору шляху
     }
 
     private void ApplyNegativeEffect(int effectValue)

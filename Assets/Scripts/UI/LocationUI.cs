@@ -64,9 +64,13 @@ public class LocationUI : MonoBehaviour
 
     public void ShowTextResultUI(List<UnityEvent> skipActions, string message)
     {
-        if (messageTextQuestionUI != null)
+        if (messageTextResultUI != null)
         {
-            messageTextQuestionUI.text = message;
+            messageTextResultUI.text = message;
+        }
+        else
+        {
+            Debug.Log("No field");
         }
 
         TextResultUI.SetActive(true);
