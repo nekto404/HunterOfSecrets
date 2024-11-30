@@ -73,6 +73,8 @@ public class MenuController : MonoBehaviour
         MainMenu.SetActive(true);
         PauseMenu.SetActive(false);
         GameMenu.SetActive(false);
+        LoseScreen.SetActive(false);
+        WinScreen.SetActive(false);
     }
 
     public void ShowSettingsMenu(bool isShowed)
@@ -110,10 +112,14 @@ public class MenuController : MonoBehaviour
 
     public void ShowLoseScreen()
     {
+       LoseScreen.SetActive(true);
+       GameMenu.SetActive(false);
     }
 
     public void ShowWinScreen()
     {
+        WinScreen.SetActive(true);
+        GameMenu.SetActive(false);
     }
 
     public void ShowConfirmation(List<UnityEngine.Events.UnityEvent> yesEvents, List<UnityEngine.Events.UnityEvent> noEvents, string message)

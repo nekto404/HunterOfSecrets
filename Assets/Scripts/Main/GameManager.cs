@@ -294,7 +294,7 @@ public class GameManager : MonoBehaviour
         if (secretsFound >= secretsRequiredForEvacuation)
         {
             Debug.Log("Відкрито можливість евакуації!");
-            // TODO: Відобразити UI для евакуації
+            EndRound();
         }
     }
 
@@ -406,6 +406,20 @@ public class GameManager : MonoBehaviour
         Debug.Log("Раунд завершено!");
         isRoundActive = false;
 
-        // Додайте тут логіку завершення раунду
+        if (secretsFound >= secretsRequiredForEvacuation)
+        {
+            menuController.ShowWinScreen();
+            Debug.Log("Гра завершена! Ви знайшли всі секрети.");
+            // Тут можна додати логіку відкриття евакуації
+        }
+        else if (timeRemaining <= 0)
+        {
+            menuController.ShowLoseScreen();
+            Debug.Log("Час вийшов! Гру завершено.");
+            // Тут можна додати логіку програшу або іншого фіналу
+        }
+
+        // Зупинка гри або перехід до іншого стану
+        Time.timeScale = 0; // Зупинка часу
     }
 }
