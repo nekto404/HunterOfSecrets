@@ -7172,6 +7172,7 @@ MonoBehaviour:
   firstTileRunUI: {fileID: 800164708}
   secondTileRunUI: {fileID: 360369029}
   thirdTileRunUI: {fileID: 231553409}
+  emptySprite: {fileID: -8527568592950175283, guid: a35b8cc75b3d4124988e391cb33f4fdf, type: 3}
 --- !u!1 &924756541
 GameObject:
   m_ObjectHideFlags: 0
@@ -7961,7 +7962,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1882347247711912902, guid: ef6947d4444ed4245a65485138fd3116, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12993,7 +12994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 3285886813759836063, guid: 5d2c4a93d55aec6408a51ade13eafb56, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

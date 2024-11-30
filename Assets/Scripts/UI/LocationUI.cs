@@ -47,6 +47,7 @@ public class LocationUI : MonoBehaviour
     [SerializeField] private Image firstTileRunUI;
     [SerializeField] private Image secondTileRunUI;
     [SerializeField] private Image thirdTileRunUI;
+    [SerializeField] private Sprite emptySprite;
 
     public void ShowQuestionUI(List<UnityEvent> yesActions, List<UnityEvent> noActions, string message)
     {
@@ -179,9 +180,9 @@ public class LocationUI : MonoBehaviour
     {
         RunUI.SetActive(true);
         // Призначення спрайтів для тайлів
-        firstTileRunUI.sprite = firstTile;
-        secondTileRunUI.sprite = secondTile;
-        thirdTileRunUI.sprite = thirdTile;
+        firstTileRunUI.sprite = firstTile == null ? emptySprite : firstTile;
+        secondTileRunUI.sprite = secondTile == null ? emptySprite : secondTile; 
+        thirdTileRunUI.sprite = thirdTile == null ? emptySprite : thirdTile; 
 
         // Розрахунок позиції трекера
         RectTransform tileRect = secondTileRunUI.GetComponent<RectTransform>();
