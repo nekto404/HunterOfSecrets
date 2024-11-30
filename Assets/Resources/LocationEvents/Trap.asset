@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventName: Trap
   description: 
-  spriteOriginal: {fileID: 0}
-  spriteAlter: {fileID: 0}
+  spriteOriginal: {fileID: 3840915444077832470, guid: 95c0d5c32eaea124cac0f200c2c47523, type: 3}
+  spriteAlter: {fileID: -4358472242703741127, guid: 70c3ff8079f89104abe2d604d90148ec, type: 3}
   successChance: 20
   rewards:
   - description: Destroyd trap
