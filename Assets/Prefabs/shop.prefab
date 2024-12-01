@@ -47,10 +47,10 @@ MonoBehaviour:
   itemPools:
   - items:
     - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
-    - {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
+    - {fileID: 11400000, guid: 9538f6d04e2450f469a4c724943882e5, type: 2}
+    - {fileID: 11400000, guid: 32f7b1acb2c9ee443bd875e0084b0124, type: 2}
+    - {fileID: 11400000, guid: 8f5bb09f56fd92d489dc0ac758c99d9b, type: 2}
+    - {fileID: 11400000, guid: f8d9687f4778a074db21f770a00cc2d2, type: 2}
   availableItems: []
   backpackUpgradeCost: 10
   refreshCost: 3

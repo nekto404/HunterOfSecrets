@@ -34,7 +34,6 @@ public class ShopUI : MonoBehaviour
     {
         shop = GameManager.Instance.GetCurrentShop();
         UpdateShopUI();
-        Debug.Log("Shop enabled");
     }
 
     public void UpdateShopUI()

@@ -18,9 +18,9 @@ MonoBehaviour:
   spriteAlter: {fileID: -4358472242703741127, guid: 70c3ff8079f89104abe2d604d90148ec, type: 3}
   successChance: 70
   rewards:
-  - description: Item found
+  - description: Gould found
     chance: 100
-    outcomeType: 2
+    outcomeType: 0
     value: 0
     effectType: 0
     itemReward: {fileID: 11400000, guid: e397b3668e8acf24ba308146cd7b1e53, type: 2}
@@ -28,6 +28,6 @@ MonoBehaviour:
   - description: Lost time
     chance: 100
     outcomeType: 4
-    value: 5
+    value: 7
     effectType: 0
     itemReward: {fileID: 0}

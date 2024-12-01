@@ -21,7 +21,7 @@ MonoBehaviour:
   - description: Destroyd trap
     chance: 100
     outcomeType: 4
-    value: 1
+    value: 2
     effectType: 0
     itemReward: {fileID: 0}
   penalties:
