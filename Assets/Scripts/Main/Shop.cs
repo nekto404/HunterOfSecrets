@@ -25,10 +25,8 @@ public class Shop : MonoBehaviour
                 itemPools.Add(new ItemPool());
             }
         }
-
-        // Заповнюємо початковий набір предметів
-        UpdateAvailableItems();
     }
+
 
     // Метод для оновлення товарів у магазині, вибирає 3 випадкових айтеми з пулів
     public void UpdateAvailableItems()

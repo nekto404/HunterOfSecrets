@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
 
         Player.Instance.Initialize();
         LoadShop();
+        
         LoadRandomLocation();
         menuController.GameShop.SetActive(true);
     }
@@ -77,7 +78,9 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("Магазин завантажено.");
+                shopInstance.UpdateAvailableItems();
             }
+            
         }
     }
 
