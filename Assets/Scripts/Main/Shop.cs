@@ -61,7 +61,7 @@ public class Shop : MonoBehaviour
     // Метод для обчислення вартості покращення рюкзака
     private int CalculateBackpackUpgradeCost(int currentBackpackSize)
     {
-        return currentBackpackSize * 10; // Приклад розрахунку: 10 монет за кожний розмір
+        return currentBackpackSize; // Приклад розрахунку: 10 монет за кожний розмір
     }
 
     // Метод для покупки предмету

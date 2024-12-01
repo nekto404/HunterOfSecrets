@@ -5863,6 +5863,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopPrefab: {fileID: 2550474709217370009, guid: 4f165863bce91e74bbb51df17dadfe4c, type: 3}
   menuController: {fileID: 491213975}
+  shopInstance: {fileID: 0}
+  currentLocation: {fileID: 0}
+  timeRemaining: 0
+  isRoundActive: 0
+  fullPath: 
   secretsFound: 0
   secretsRequiredForEvacuation: 3
 --- !u!114 &781592697
@@ -5895,7 +5900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &790052371
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8706,6 +8711,7 @@ MonoBehaviour:
   upgradeUIPrefab: {fileID: 5092804435185855796, guid: 69db8dcc00c34d84c857370537b8427b, type: 3}
   refreshIcon: {fileID: -8687029706193621143, guid: 61c2ff56e42e8fe4cb8c381e318140ec, type: 3}
   upgradeIcon: {fileID: -6415490079858998490, guid: 89fcab06c86598649b9f150ef51ff029, type: 3}
+  shop: {fileID: 0}
 --- !u!1 &1193869622
 GameObject:
   m_ObjectHideFlags: 0
@@ -11756,7 +11762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1629591913
 RectTransform:
   m_ObjectHideFlags: 0

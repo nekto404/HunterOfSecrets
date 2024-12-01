@@ -31,7 +31,7 @@ public class Player
 
     public void Initialize()
     {
-        coins = 20;                        // Початкова кількість монет
+        coins = 40;                        // Початкова кількість монет
         backpack = new Backpack();           // Створення нового рюкзака
         storage = new Backpack();             // Створення нового складу
         skills = new List<PlayerSkill>();    // Порожній список навичок
@@ -105,5 +105,10 @@ public class Player
     public bool CanAfford(int amount)
     {
         return coins >= amount;
+    }
+
+    public void ClearInstance()
+    {
+        _instance = null;
     }
 }

@@ -15,5 +15,5 @@ MonoBehaviour:
   id: 1
   tileName: Ground
   sprite: {fileID: 9174669360034176542, guid: de601f3b390f2df42bd30f5a50732091, type: 3}
-  travelTime: 2
+  travelTime: 0.5
   negativeEffect: 0

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73de5b1eb730ea64fbd6f1cdd78d6c4a, type: 3}
-  m_Name: Water
+  m_Name: Mountain
   m_EditorClassIdentifier: 
-  id: 2
-  tileName: Water
-  sprite: {fileID: -7430383670088101596, guid: 56aafb4312d88f544bc368d89373fe87, type: 3}
-  travelTime: 0.75
+  id: 4
+  tileName: Mountain
+  sprite: {fileID: -7587183992937930520, guid: ada94784572b4f642ab041cc87812186, type: 3}
+  travelTime: 2
   negativeEffect: 0

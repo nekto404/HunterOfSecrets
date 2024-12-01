@@ -99,6 +99,13 @@ public class MenuController : MonoBehaviour
     }
 
 
+    public void ClearLastGameUI()
+    {
+        LocationUI.gameObject.SetActive(false);
+        WinScreen.gameObject.SetActive(false);
+        LoseScreen.gameObject.SetActive(false);
+    }
+
 
     public void SFXVolumeChanged()
     {

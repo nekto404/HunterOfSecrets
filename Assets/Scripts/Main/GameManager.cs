@@ -10,13 +10,18 @@ public class GameManager : MonoBehaviour
     public GameObject shopPrefab;
     public MenuController menuController;
 
+    [SerializeField]
     private Shop shopInstance;
+    [SerializeField]
     private Location currentLocation;
 
+    [SerializeField]
     private float timeRemaining; // Залишок часу
+    [SerializeField]
     private bool isRoundActive = false;
-
+    [SerializeField]
     private List<int> fullPath = new List<int>();
+    [SerializeField]
     private Coroutine pathTraversalCoroutine;
 
     public int secretsFound = 0; // Кількість знайдених секретів
@@ -36,9 +41,26 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (shopInstance != null)
+        {
+            Destroy(shopInstance.gameObject);
+            shopInstance = null;
+        }
+
+        if (Player.Instance != null)
+        {
+            Player.Instance.ClearInstance();
+        }
+
+        secretsFound = 0;
+        isRoundActive = false;
+        fullPath = new List<int>();
+        menuController.ClearLastGameUI();
+
         Player.Instance.Initialize();
         LoadShop();
         LoadRandomLocation();
+        menuController.GameShop.SetActive(true);
     }
 
     private void LoadShop()
@@ -383,6 +405,7 @@ public class GameManager : MonoBehaviour
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
+                Debug.Log("Time.deltaTime " + Time.deltaTime);
             }
             else
             {
@@ -408,18 +431,20 @@ public class GameManager : MonoBehaviour
 
         if (secretsFound >= secretsRequiredForEvacuation)
         {
+            StopCoroutine(pathTraversalCoroutine);
             menuController.ShowWinScreen();
             Debug.Log("Гра завершена! Ви знайшли всі секрети.");
             // Тут можна додати логіку відкриття евакуації
         }
         else if (timeRemaining <= 0)
         {
+            StopCoroutine(pathTraversalCoroutine);
             menuController.ShowLoseScreen();
             Debug.Log("Час вийшов! Гру завершено.");
             // Тут можна додати логіку програшу або іншого фіналу
         }
 
         // Зупинка гри або перехід до іншого стану
-        Time.timeScale = 0; // Зупинка часу
+  
     }
 }

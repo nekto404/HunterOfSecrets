@@ -18,6 +18,7 @@ public class Backpack
             {
                 capacity = value;
             }
+            OnStorageUpdated?.Invoke();
         }
     }
 

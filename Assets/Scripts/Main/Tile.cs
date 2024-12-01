@@ -6,6 +6,6 @@ public class Tile : ScriptableObject
     public int id;                          // Унікальний ідентифікатор тайла
     public string tileName;                 // Назва тайла
     public Sprite sprite;                   // Спрайт для відображення
-    public int travelTime;                  // Час для проходження цього тайла
+    public float travelTime;                  // Час для проходження цього тайла
     public int negativeEffect;              // Показник негативного ефекту тайла
 }

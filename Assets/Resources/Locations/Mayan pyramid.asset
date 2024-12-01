@@ -17,7 +17,7 @@ MonoBehaviour:
 
     Mayan pyramid'
   locationSprite: {fileID: 660958469559324409, guid: b49b0ced75879b3448b4a52dfe1fd9e9, type: 3}
-  travelTimes: 2c01000018010000fa000000e6000000d2000000
+  travelTimes: 9600000018010000fa000000e6000000d2000000
   events:
   - {fileID: 11400000, guid: a895373d0b9c341429d9d39041c8193a, type: 2}
   - {fileID: 11400000, guid: d8eec0b11358c3f42992550f18033fa1, type: 2}

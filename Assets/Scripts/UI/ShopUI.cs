@@ -15,6 +15,7 @@ public class ShopUI : MonoBehaviour
     public Sprite refreshIcon;             // Іконка для кнопки рефрешу
     public Sprite upgradeIcon;             // Іконка для кнопки покращення рюкзака
 
+    [SerializeField]
     private Shop shop;
 
     private void Start()
@@ -27,6 +28,13 @@ public class ShopUI : MonoBehaviour
         }
 
         UpdateShopUI();
+    }
+
+    private void OnEnable()
+    {
+        shop = GameManager.Instance.GetCurrentShop();
+        UpdateShopUI();
+        Debug.Log("Shop enabled");
     }
 
     public void UpdateShopUI()
