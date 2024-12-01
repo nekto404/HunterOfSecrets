@@ -32,7 +32,7 @@ public class ShopBackpackUI : BaseStorageUI
         // Логіка продажу предмета
         if (Player.Instance.backpack.RemoveItem(item))
         {
-            Player.Instance.coins += item.Price;
+            Player.Instance.AddCoins(item.Price);
             Debug.Log($"Предмет '{item.Name}' продано за {item.Price} монет. Новий баланс: {Player.Instance.coins} монет.");
             UpdateInventoryUI();
         }

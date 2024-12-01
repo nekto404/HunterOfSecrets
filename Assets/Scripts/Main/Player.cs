@@ -22,6 +22,8 @@ public class Player
     public Backpack storage;
     public List<PlayerSkill> skills = new List<PlayerSkill>();
     public int[] currentStatuses = new int[10];
+    public delegate void CoinsChanged(int newAmount);
+    public event CoinsChanged OnCoinsChanged;
 
     private Player()
     {
@@ -37,10 +39,12 @@ public class Player
         skills = new List<PlayerSkill>();    // Порожній список навичок
         currentStatuses = new int[10];       // Масив статусів
         level = 1;                           // Початковий рівень
+        OnCoinsChanged?.Invoke(coins);
     }
 
     public void AddCoins(int amount)
     {
+        OnCoinsChanged?.Invoke(coins);
         coins += amount;
         Debug.Log("Coins added: " + amount + ". Total coins: " + coins);
     }
@@ -51,6 +55,7 @@ public class Player
         {
             coins -= amount;
             Debug.Log("Coins spent: " + amount + ". Remaining coins: " + coins);
+            OnCoinsChanged?.Invoke(coins);
             return true;
         }
         else
