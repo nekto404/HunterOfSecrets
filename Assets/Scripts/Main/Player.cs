@@ -83,7 +83,7 @@ public class Player
 
     public void ApplyStatus(int statusIndex)
     {
-        if (statusIndex > 0 && statusIndex < currentStatuses.Length)
+        if (statusIndex >= 0 && statusIndex < currentStatuses.Length)
         {
             currentStatuses[statusIndex]++;
             Debug.Log("Status " + statusIndex + " applied. Current count: " + currentStatuses[statusIndex]);
@@ -92,6 +92,26 @@ public class Player
         {
             Debug.LogWarning("Invalid status index.");
         }
+    }
+
+    public float GetSpeedModifier()
+    {
+        float speedModifier = 1.0f;
+        if (currentStatuses[1] > 0)
+        {
+            speedModifier -= 0.01f * currentStatuses[1]; // Зменшення швидкості на 1% за кожну одиницю ефекту 1
+        }
+        return Mathf.Max(speedModifier, 0.1f); // Мінімальна швидкість 10%
+    }
+
+    public bool ShouldStop()
+    {
+        if (currentStatuses[2] > 20)
+        {
+            currentStatuses[2] -= 20; // Зменшення значення ефекту 2 на 20
+            return true;
+        }
+        return false;
     }
 
     public void RemoveStatus(int statusIndex)
@@ -115,5 +135,18 @@ public class Player
     public void ClearInstance()
     {
         _instance = null;
+    }
+
+    public string GetActiveStatuses()
+    {
+        List<string> activeStatuses = new List<string>();
+        for (int i = 0; i < currentStatuses.Length; i++)
+        {
+            if (currentStatuses[i] > 0)
+            {
+                activeStatuses.Add($"Effect {i}: {currentStatuses[i]}");
+            }
+        }
+        return string.Join(", ", activeStatuses);
     }
 }

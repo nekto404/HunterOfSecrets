@@ -16,4 +16,4 @@ MonoBehaviour:
   tileName: Stairs
   sprite: {fileID: -3667217699800648356, guid: 095cd7655b637df4c9eaa5c6a9d0d6cd, type: 3}
   travelTime: 0.75
-  negativeEffect: 0
+  negativeEffect: 2

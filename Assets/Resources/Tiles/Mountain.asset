@@ -16,4 +16,4 @@ MonoBehaviour:
   tileName: Mountain
   sprite: {fileID: -7587183992937930520, guid: ada94784572b4f642ab041cc87812186, type: 3}
   travelTime: 2
-  negativeEffect: 0
+  negativeEffect: 2

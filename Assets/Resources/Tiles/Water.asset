@@ -16,4 +16,4 @@ MonoBehaviour:
   tileName: Water
   sprite: {fileID: -7430383670088101596, guid: 56aafb4312d88f544bc368d89373fe87, type: 3}
   travelTime: 0.75
-  negativeEffect: 0
+  negativeEffect: 1

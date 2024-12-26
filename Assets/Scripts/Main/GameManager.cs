@@ -226,6 +226,7 @@ public class GameManager : MonoBehaviour
 
             float timeSpent = 0f;
             float updateInterval = 0.1f; // Інтервал оновлення (10 разів на секунду)
+            float originalTravelTime = currentTile.travelTime; // Зберігаємо оригінальний час проходження
 
             // Відображаємо початковий стан прогресу
             menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, 0f);
@@ -233,20 +234,32 @@ public class GameManager : MonoBehaviour
             // Починаємо проходження тайла
             while (timeSpent < currentTile.travelTime)
             {
+                // Перевіряємо, чи гравець повинен зупинитися
+                if (Player.Instance.ShouldStop())
+                {
+                    Debug.Log("Гравець зупинений на 3 секунди.");
+                    yield return new WaitForSeconds(3f); // Зупиняємо гравця на 3 секунди
+                }
+
                 yield return new WaitForSeconds(updateInterval); // Чекаємо 0.1 секунди
-                timeSpent += updateInterval;
+                timeSpent += updateInterval * Player.Instance.GetSpeedModifier(); // Застосовуємо модифікатор швидкості
 
                 // Оновлюємо прогрес у LocationUI
                 float progress = Mathf.Clamp01(timeSpent / currentTile.travelTime);
                 menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, progress);
 
                 // Додаємо негативний ефект, якщо він є, та інтервал проходження збігається
-                if (currentTile.negativeEffect > 0 && Mathf.FloorToInt(timeSpent / updateInterval) > Mathf.FloorToInt((timeSpent - updateInterval) / updateInterval))
+                if (currentTile.negativeEffect > 0)
                 {
-                    ApplyNegativeEffect(currentTile.negativeEffect);
+                    int effectInterval = Mathf.FloorToInt(timeSpent / originalTravelTime);
+                    if (effectInterval > 0 && Mathf.FloorToInt((timeSpent - updateInterval) / originalTravelTime) < effectInterval)
+                    {
+                        ApplyNegativeEffect(currentTile.negativeEffect);
+                    }
                 }
 
                 Debug.Log($"Прогрес на тайлі {currentTile.tileName}: {progress * 100}%");
+                Debug.Log($"Поточні ефекти: {Player.Instance.GetActiveStatuses()}");
             }
 
             Debug.Log($"Гравець завершив тайл {currentTile.tileName} (ID: {pathStepIds[i]})");
@@ -399,6 +412,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"Гравець отримує негативний ефект: {effectValue}");
         Player.Instance.ApplyStatus(effectValue); // Логіка в класі `Player`
+        Debug.Log($"Поточні ефекти: {Player.Instance.GetActiveStatuses()}");
     }
 
     private void Update()
