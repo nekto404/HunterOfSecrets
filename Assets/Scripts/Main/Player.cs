@@ -24,11 +24,35 @@ public class Player
     public int[] currentStatuses = new int[10];
     public delegate void CoinsChanged(int newAmount);
     public event CoinsChanged OnCoinsChanged;
+    private List<Skill> tileEnterSkills = new List<Skill>();
 
     private Player()
     {
         backpack = new Backpack();
         storage = new Backpack();
+    }
+
+
+
+    public void CalculateTileEnterSkills()
+    {
+        tileEnterSkills.Clear();
+        foreach (var item in backpack.GetItems())
+        {
+            foreach (var skill in item.Skills)
+            {
+                if (skill.Trigger == Trigger.TileEnter)
+                {
+                    tileEnterSkills.Add(skill);
+                }
+            }
+        }
+        Debug.Log($"Загальна кількість навичок, що активуються при вході на тайл: {tileEnterSkills.Count}");
+    }
+
+    public List<Skill> GetTileEnterSkills()
+    {
+        return tileEnterSkills;
     }
 
     public void Initialize()

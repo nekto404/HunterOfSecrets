@@ -158,6 +158,9 @@ public class GameManager : MonoBehaviour
         menuController.GameShop.SetActive(false);
         menuController.GameLocation.SetActive(true);
 
+        // Обчислюємо навички, що активуються при вході на тайл
+        Player.Instance.CalculateTileEnterSkills();
+
         // Викликаємо вибір шляху через ShowPathSelection
         ShowPathSelection();
     }
@@ -219,6 +222,12 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
+            // Активація навичок предметів при вході на тайл
+            foreach (var skill in Player.Instance.GetTileEnterSkills())
+            {
+                ActivateSkill(skill);
+            }
+
             // Отримуємо спрайти для трьох тайлів
             Sprite previousTileSprite = i > 0 ? TileManager.Instance.GetTileById(pathStepIds[i - 1]).sprite : null;
             Sprite currentTileSprite = currentTile.sprite;
@@ -232,7 +241,7 @@ public class GameManager : MonoBehaviour
             menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, 0f);
 
             // Починаємо проходження тайла
-            while (timeSpent < currentTile.travelTime)
+            while (timeSpent < originalTravelTime)
             {
                 // Перевіряємо, чи гравець повинен зупинитися
                 if (Player.Instance.ShouldStop())
@@ -245,7 +254,7 @@ public class GameManager : MonoBehaviour
                 timeSpent += updateInterval * Player.Instance.GetSpeedModifier(); // Застосовуємо модифікатор швидкості
 
                 // Оновлюємо прогрес у LocationUI
-                float progress = Mathf.Clamp01(timeSpent / currentTile.travelTime);
+                float progress = Mathf.Clamp01(timeSpent / originalTravelTime);
                 menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, progress);
 
                 // Додаємо негативний ефект, якщо він є, та інтервал проходження збігається
@@ -281,6 +290,38 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("У поточній локації немає доступних подій.");
         }
         // Логіка після завершення проходження шляху
+    }
+
+    private void ActivateSkill(Skill skill)
+    {
+        switch (skill.Effect)
+        {
+            case Effect.RemoveStackWithChance:
+                if (UnityEngine.Random.Range(0, 100) < skill.EffectValue)
+                {
+                    Player.Instance.RemoveStatus(skill.EffectValueAdditional);
+                    Debug.Log($"Ефект {skill.EffectDescription} активовано: видалено стек ефекту {skill.EffectValueAdditional}");
+                }
+                break;
+
+            case Effect.AbbreviatedPassageOfTile:
+                // Скорочення часу проходження тайла
+                // Логіка для скорочення часу проходження тайла
+                break;
+
+            case Effect.AddStackWithChance:
+                if (UnityEngine.Random.Range(0, 100) < skill.EffectValue)
+                {
+                    Player.Instance.ApplyStatus(skill.EffectValueAdditional);
+                    Debug.Log($"Ефект {skill.EffectDescription} активовано: додано стек ефекту {skill.EffectValueAdditional}");
+                }
+                break;
+        }
+
+        if (skill.OneTimeUse)
+        {
+            // Логіка для видалення одноразової навички
+        }
     }
 
     private void ShowLocationEvent(LocationEvent locationEvent)
