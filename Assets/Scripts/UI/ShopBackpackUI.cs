@@ -6,34 +6,34 @@ public class ShopBackpackUI : BaseStorageUI
     private void OnEnable()
     {
         // Підписуємося на подію оновлення складу
-        Player.Instance.backpack.OnStorageUpdated += UpdateInventoryUI;
+        Player.Instance.Backpack.OnStorageUpdated += UpdateInventoryUI;
         UpdateInventoryUI(); // Оновлюємо інтерфейс при активації
     }
 
     private void OnDisable()
     {
         // Відписуємося від події при вимкненні UI
-        Player.Instance.backpack.OnStorageUpdated -= UpdateInventoryUI;
+        Player.Instance.Backpack.OnStorageUpdated -= UpdateInventoryUI;
     }
     protected override List<Item> GetItems()
     {
         // Повертає предмети з рюкзака гравця
-        return Player.Instance.backpack.GetItems();
+        return Player.Instance.Backpack.GetItems();
     }
 
     protected override int GetBackpackSize()
     {
         // Повертає загальну ємність рюкзака
-        return Player.Instance.backpack.Size;
+        return Player.Instance.Backpack.Size;
     }
 
     protected override void OnItemAction(Item item)
     {
         // Логіка продажу предмета
-        if (Player.Instance.backpack.RemoveItem(item))
+        if (Player.Instance.Backpack.RemoveItem(item))
         {
             Player.Instance.AddCoins(item.Price);
-            Debug.Log($"Предмет '{item.Name}' продано за {item.Price} монет. Новий баланс: {Player.Instance.coins} монет.");
+            Debug.Log($"Предмет '{item.Name}' продано за {item.Price} монет. Новий баланс: {Player.Instance.Coins} монет.");
             UpdateInventoryUI();
         }
         else

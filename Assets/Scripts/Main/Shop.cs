@@ -52,7 +52,7 @@ public class Shop : MonoBehaviour
         }
 
         // Оновлюємо вартість покращення рюкзака
-        backpackUpgradeCost = CalculateBackpackUpgradeCost(Player.Instance.backpack.Size);
+        backpackUpgradeCost = CalculateBackpackUpgradeCost(Player.Instance.Backpack.Size);
         Debug.Log("Shop items updated. Available items count: " + availableItems.Count);
     }
 
@@ -67,7 +67,7 @@ public class Shop : MonoBehaviour
     {
         if (Player.Instance.CanAfford(item.Price))
         {
-            if (Player.Instance.backpack.AddItem(item))
+            if (Player.Instance.Backpack.AddItem(item))
             {
                 Player.Instance.SpendCoins(item.Price);
                 availableItems.Remove(item);
@@ -92,9 +92,9 @@ public class Shop : MonoBehaviour
         if (Player.Instance.CanAfford(backpackUpgradeCost))
         {
             Player.Instance.SpendCoins(backpackUpgradeCost);
-            Player.Instance.backpack.Size++;
-            Debug.Log("Backpack upgraded. New size: " + Player.Instance.backpack.Size);
-            backpackUpgradeCost = CalculateBackpackUpgradeCost(Player.Instance.backpack.Size);
+            Player.Instance.Backpack.Size++;
+            Debug.Log("Backpack upgraded. New size: " + Player.Instance.Backpack.Size);
+            backpackUpgradeCost = CalculateBackpackUpgradeCost(Player.Instance.Backpack.Size);
             return true;
         }
         else

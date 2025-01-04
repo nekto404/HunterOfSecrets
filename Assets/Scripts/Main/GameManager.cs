@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Визначаємо рівень гравця (за замовчуванням 0, якщо такого поля немає)
-        int playerLevel = Mathf.Clamp(Player.Instance.level - 1, 0, currentLocation.travelTimes.Length - 1);
+        int playerLevel = Mathf.Clamp(Player.Instance.Level - 1, 0, currentLocation.travelTimes.Length - 1);
 
         // Встановлюємо тривалість раунду з `travelTimes`
         timeRemaining = currentLocation.travelTimes[playerLevel];
@@ -406,7 +406,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case EventOutcome.OutcomeType.StatusEffect:
-                if (outcome.effectType >= 0 && outcome.effectType < Player.Instance.currentStatuses.Length)
+                if (outcome.effectType >= 0 && outcome.effectType < Player.Instance.CurrentStatuses.Length)
                 {
                     for (int i = 0; i < outcome.value; i++)
                     {

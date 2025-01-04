@@ -244,9 +244,9 @@ public class LocationUI : MonoBehaviour
     // Метод для додавання предмета до рюкзака
     private void AddItemToBackpack()
     {
-        if (Player.Instance.backpack.CanFitItem(rewardItem)) // Перевіряємо, чи є місце в рюкзаку
+        if (Player.Instance.Backpack.CanFitItem(rewardItem)) // Перевіряємо, чи є місце в рюкзаку
         {
-            Player.Instance.backpack.AddItem(rewardItem); // Додаємо предмет до рюкзака
+            Player.Instance.Backpack.AddItem(rewardItem); // Додаємо предмет до рюкзака
             Debug.Log($"Предмет {rewardItem.Name} додано до рюкзака.");
 
             // Закриваємо UI нагороди

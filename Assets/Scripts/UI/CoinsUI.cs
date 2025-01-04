@@ -10,7 +10,7 @@ public class CoinsUI : MonoBehaviour
         // Підписуємося на подію оновлення монет
         Player.Instance.OnCoinsChanged += UpdateCoinsUI;
         // Початкове оновлення тексту
-        UpdateCoinsUI(Player.Instance.coins);
+        UpdateCoinsUI(Player.Instance.Coins);
     }
 
     private void OnDisable()
