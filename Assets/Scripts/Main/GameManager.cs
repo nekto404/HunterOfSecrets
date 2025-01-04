@@ -161,6 +161,9 @@ public class GameManager : MonoBehaviour
         // Обчислюємо навички, що активуються при вході на тайл
         Player.Instance.CalculateTileEnterSkills();
 
+        // Обчислюємо навички, що активуються при отриманні стека ефекту
+        Player.Instance.CalculateGetPlayerEffectStacksSkills();
+
         // Викликаємо вибір шляху через ShowPathSelection
         ShowPathSelection();
     }
