@@ -226,9 +226,10 @@ public class GameManager : MonoBehaviour
             }
 
             // Активація навичок предметів при вході на тайл
+            float modifiedTravelTime = currentTile.travelTime;
             foreach (var skill in Player.Instance.GetTileEnterSkills())
             {
-                ActivateSkill(skill);
+                modifiedTravelTime = ActivateSkill(skill, currentTile, modifiedTravelTime);
             }
 
             // Отримуємо спрайти для трьох тайлів
@@ -238,13 +239,12 @@ public class GameManager : MonoBehaviour
 
             float timeSpent = 0f;
             float updateInterval = 0.1f; // Інтервал оновлення (10 разів на секунду)
-            float originalTravelTime = currentTile.travelTime; // Зберігаємо оригінальний час проходження
 
             // Відображаємо початковий стан прогресу
             menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, 0f);
 
             // Починаємо проходження тайла
-            while (timeSpent < originalTravelTime)
+            while (timeSpent < modifiedTravelTime)
             {
                 // Перевіряємо, чи гравець повинен зупинитися
                 if (Player.Instance.ShouldStop())
@@ -257,14 +257,14 @@ public class GameManager : MonoBehaviour
                 timeSpent += updateInterval * Player.Instance.GetSpeedModifier(); // Застосовуємо модифікатор швидкості
 
                 // Оновлюємо прогрес у LocationUI
-                float progress = Mathf.Clamp01(timeSpent / originalTravelTime);
+                float progress = Mathf.Clamp01(timeSpent / modifiedTravelTime);
                 menuController.LocationUI.ShowRunUI(previousTileSprite, currentTileSprite, nextTileSprite, progress);
 
                 // Додаємо негативний ефект, якщо він є, та інтервал проходження збігається
                 if (currentTile.negativeEffect > 0)
                 {
-                    int effectInterval = Mathf.FloorToInt(timeSpent / originalTravelTime);
-                    if (effectInterval > 0 && Mathf.FloorToInt((timeSpent - updateInterval) / originalTravelTime) < effectInterval)
+                    int effectInterval = Mathf.FloorToInt(timeSpent / modifiedTravelTime);
+                    if (effectInterval > 0 && Mathf.FloorToInt((timeSpent - updateInterval) / modifiedTravelTime) < effectInterval)
                     {
                         ApplyNegativeEffect(currentTile.negativeEffect);
                     }
@@ -295,7 +295,7 @@ public class GameManager : MonoBehaviour
         // Логіка після завершення проходження шляху
     }
 
-    private void ActivateSkill(Skill skill)
+    private float ActivateSkill(Skill skill, Tile currentTile, float modifiedTravelTime)
     {
         switch (skill.Effect)
         {
@@ -309,7 +309,11 @@ public class GameManager : MonoBehaviour
 
             case Effect.AbbreviatedPassageOfTile:
                 // Скорочення часу проходження тайла
-                // Логіка для скорочення часу проходження тайла
+                if (skill.EffectValue > 0)
+                {
+                    modifiedTravelTime /= skill.EffectValue;
+                    Debug.Log($"Ефект {skill.EffectDescription} активовано: час проходження тайла скорочено до {modifiedTravelTime} секунд.");
+                }
                 break;
 
             case Effect.AddStackWithChance:
@@ -325,6 +329,8 @@ public class GameManager : MonoBehaviour
         {
             // Логіка для видалення одноразової навички
         }
+
+        return modifiedTravelTime;
     }
 
     private void ShowLocationEvent(LocationEvent locationEvent)
