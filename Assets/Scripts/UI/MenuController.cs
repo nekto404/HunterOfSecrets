@@ -14,6 +14,7 @@ public class MenuController : MonoBehaviour
     public GameObject WinScreen;
     public LocationUI LocationUI;
     public ConfirmationUI ConfirmationUI;
+    public PlayerStatusUI PlayerStatusUI;
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;

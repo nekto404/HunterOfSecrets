@@ -3,8 +3,18 @@ using UnityEngine;
 
 public class Player
 {
-    private static Player _instance = new Player();
-    public static Player Instance => _instance;
+    private static Player _instance;
+    public static Player Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new Player();
+            }
+            return _instance;
+        }
+    }
 
     public int Coins { get; private set; } = 0;
     public int Level { get; private set; } = 1;
@@ -22,6 +32,14 @@ public class Player
     {
         Backpack = new Backpack();
         Storage = new Backpack();
+    }
+
+    public static void InitializeInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new Player();
+        }
     }
 
     public void ActivateRoundStartSkills()
@@ -239,3 +257,4 @@ public class Player
         return string.Join(", ", activeStatuses);
     }
 }
+

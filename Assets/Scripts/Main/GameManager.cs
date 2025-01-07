@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     public int secretsFound = 0; // Кількість знайдених секретів
     public int secretsRequiredForEvacuation = 3;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -47,19 +48,28 @@ public class GameManager : MonoBehaviour
             shopInstance = null;
         }
 
-        if (Player.Instance != null)
+        if (Player.Instance == null)
         {
-            Player.Instance.ClearInstance();
+            Player.InitializeInstance();
         }
 
         secretsFound = 0;
         isRoundActive = false;
         fullPath = new List<int>();
-        menuController.ClearLastGameUI();
+
+        if (menuController != null)
+        {
+            menuController.ClearLastGameUI();
+        }
+        else
+        {
+            Debug.LogError("MenuController не призначений у GameManager.");
+            return;
+        }
 
         Player.Instance.Initialize();
+
         LoadShop();
-        
         LoadRandomLocation();
         menuController.GameShop.SetActive(true);
     }
@@ -80,7 +90,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Магазин завантажено.");
                 shopInstance.UpdateAvailableItems();
             }
-            
         }
     }
 
@@ -195,10 +204,8 @@ public class GameManager : MonoBehaviour
         menuController.LocationUI.ShowPathUI(randomPaths[0].pathSteps, randomPaths[1].pathSteps, firstPathActions, secondPathActions);
     }
 
-
     private void OnPathChosen(Path chosenPath)
     {
-
         // Додаємо обраний шлях до загального маршруту
         fullPath.AddRange(chosenPath.pathSteps);
 
@@ -463,6 +470,15 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Гравець отримує негативний ефект: {effectValue}");
         Player.Instance.ApplyStatus(effectValue); // Логіка в класі `Player`
         Debug.Log($"Поточні ефекти: {Player.Instance.GetActiveStatuses()}");
+        UpdatePlayerStatusUI();
+    }
+
+    private void UpdatePlayerStatusUI()
+    {
+        if (menuController != null && menuController.PlayerStatusUI != null)
+        {
+            menuController.PlayerStatusUI.UpdateStatusUI();
+        }
     }
 
     private void Update()
@@ -511,6 +527,8 @@ public class GameManager : MonoBehaviour
         }
 
         // Зупинка гри або перехід до іншого стану
-  
     }
 }
+
+
+

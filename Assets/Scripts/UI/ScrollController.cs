@@ -13,6 +13,7 @@ public class ScrollController : MonoBehaviour
     private float itemWidth;            // Ширина одного елемента
     private float maxScrollPosition;    // Максимальна прокрутка
     private float minScrollPosition;    // Мінімальна прокрутка
+    [SerializeField]
     private int visibleItems = 12;      // Кількість видимих елементів одночасно
 
     void Start()
