@@ -66,9 +66,12 @@ public class Player
             // Активація навичок при отриманні стека ефекту
             foreach (var skill in GetGetPlayerEffectStacksSkills())
             {
-                if (skill.TriggerValue == statusIndex)
+                if (skill.TriggerValue == 0 || CurrentStatuses[statusIndex] >= skill.TriggerValue)
                 {
-                    ActivateSkill(skill);
+                    if (skill.TriggerValue == statusIndex)
+                    {
+                        ActivateSkill(skill);
+                    }
                 }
             }
         }
@@ -257,4 +260,3 @@ public class Player
         return string.Join(", ", activeStatuses);
     }
 }
-
