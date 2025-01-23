@@ -50,7 +50,7 @@ public class Player
             {
                 if (skill.Trigger == Trigger.RoundStart)
                 {
-                    ActivateSkill(skill);
+                    ActivateSkill(skill, item);
                 }
             }
         }
@@ -70,7 +70,7 @@ public class Player
                 {
                     if (skill.TriggerValue == statusIndex)
                     {
-                        ActivateSkill(skill);
+                        ActivateSkill(skill, null);
                     }
                 }
             }
@@ -81,7 +81,7 @@ public class Player
         }
     }
 
-    private void ActivateSkill(Skill skill)
+    private void ActivateSkill(Skill skill, Item item)
     {
         switch (skill.Effect)
         {
@@ -107,9 +107,20 @@ public class Player
                 break;
         }
 
-        if (skill.OneTimeUse)
+        if (skill.OneTimeUse && item != null)
         {
-            // Логіка для видалення одноразової навички
+            Backpack.RemoveItem(item);
+            RemoveItemSkills(item);
+            Debug.Log($"Предмет {item.Name} видалено з рюкзака після одноразового використання.");
+        }
+    }
+
+    private void RemoveItemSkills(Item item)
+    {
+        foreach (var skill in item.Skills)
+        {
+            getPlayerEffectStacksSkills.Remove(skill);
+            tileEnterSkills.Remove(skill);
         }
     }
 
@@ -260,3 +271,7 @@ public class Player
         return string.Join(", ", activeStatuses);
     }
 }
+
+
+
+
