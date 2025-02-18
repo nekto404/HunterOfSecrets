@@ -50,7 +50,8 @@ public class Player
             {
                 if (skill.Trigger == Trigger.RoundStart)
                 {
-                    ActivateSkill(skill, item);
+                    float dummyTravelTime = 0f;
+                    ActivateSkill(skill, item, ref dummyTravelTime);
                 }
             }
         }
@@ -68,10 +69,8 @@ public class Player
             {
                 if (skill.TriggerValue == 0 || CurrentStatuses[statusIndex] >= skill.TriggerValue)
                 {
-                    if (skill.TriggerValue == statusIndex)
-                    {
-                        ActivateSkill(skill, null);
-                    }
+                    float dummyTravelTime = 0f;
+                    ActivateSkill(skill, null, ref dummyTravelTime);
                 }
             }
         }
@@ -81,7 +80,7 @@ public class Player
         }
     }
 
-    private void ActivateSkill(Skill skill, Item item)
+    private void ActivateSkill(Skill skill, Item item, ref float modifiedTravelTime)
     {
         switch (skill.Effect)
         {
@@ -95,7 +94,12 @@ public class Player
 
             case Effect.AbbreviatedPassageOfTile:
                 // Скорочення часу проходження тайла
-                // Логіка для скорочення часу проходження тайла
+                if (item != null)
+                {
+                    float reduction = modifiedTravelTime * (skill.EffectValue / 100f);
+                    modifiedTravelTime -= reduction;
+                    Debug.Log($"Ефект {skill.EffectDescription} активовано: час проходження тайла скорочено на {reduction} секунд.");
+                }
                 break;
 
             case Effect.AddStackWithChance:
@@ -271,7 +275,6 @@ public class Player
         return string.Join(", ", activeStatuses);
     }
 }
-
 
 
 

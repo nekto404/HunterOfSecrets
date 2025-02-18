@@ -35,7 +35,10 @@ public class Skill
     public int TriggerValue;
     public Effect Effect;
     public int EffectValue;
+
+    [Tooltip("EffectValueAdditional: 1 - Намокання, 2 - Виснаження")]
     public int EffectValueAdditional;
+
     public string EffectDescription;
     public bool OneTimeUse;
 }

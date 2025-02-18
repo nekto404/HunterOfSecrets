@@ -18,9 +18,10 @@ MonoBehaviour:
   Sprite: {fileID: 7902364575885455685, guid: 5e0d0f0ba9322234586339dd6706380b, type: 3}
   Skills:
   - Trigger: 0
-    TriggerValue: 0
+    TriggerValue: 1
     Effect: 0
-    EffectValue: 0
+    EffectValue: 1
     EffectValueAdditional: 30
     EffectDescription: When you get one stack of wetness, you have a chance to get
       rid of it instantly
+    OneTimeUse: 0

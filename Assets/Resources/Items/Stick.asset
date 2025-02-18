@@ -16,4 +16,11 @@ MonoBehaviour:
   Size: 2
   Price: 5
   Sprite: {fileID: -306787472437928336, guid: 3347614c73f5d1d4385a51d2b5eeb853, type: 3}
-  Skills: []
+  Skills:
+  - Trigger: 0
+    TriggerValue: 0
+    Effect: 0
+    EffectValue: 0
+    EffectValueAdditional: 0
+    EffectDescription: 
+    OneTimeUse: 0
